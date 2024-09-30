@@ -1,0 +1,119 @@
+https://dev.1c-bitrix.ru/support/forum/forum32/topic142464/
+В файле bitrix/php_interface/dbconn.php пропишите переменные (bitrix vm на них смотрит)
+
+$DBType
+$DBHost
+$DBLogin
+$DBPassword
+$DBName
+
+а потом удалить кеш файл /opt/webdir/tmp/sites_errors.cache
+alter table b_user add `PASSWORD_EXPIRED` char(1) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'N';
+ALTER TABLE b_calendar_event ADD SYNC_STATUS varchar(20) null;
+ALTER TABLE b_rest_placement ADD ICON_ID varchar(255) DEFAULT NULL;
+show create table b_mail_message;
+ALTER TABLE b_mail_message ADD IS_OLD varchar(255) DEFAULT NULL;b_clouds_file_hash
+
+
+
+
+
+
+
+
+
+CREATE TABLE `b_clouds_file_hash` (
+  `ID` int(32) NOT NULL AUTO_INCREMENT,
+  `BUCKET_ID` int(11) NOT NULL,
+  `FILE_PATH` varchar(760) COLLATE utf8_unicode_ci NOT NULL,
+  `FILE_SIZE` bigint(20) DEFAULT NULL,
+  `FILE_MTIME` datetime DEFAULT NULL,	
+  `FILE_HASH` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `ix_b_clouds_file_hash` (`BUCKET_ID`,`FILE_PATH`(190))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
+CREATE TABLE `b_crm_addr` (
+  `TYPE_ID` tinyint(1) unsigned NOT NULL,
+  `ENTITY_TYPE_ID` tinyint(1) unsigned NOT NULL,
+  `ENTITY_ID` int(1) unsigned NOT NULL,
+  `ANCHOR_TYPE_ID` tinyint(1) unsigned DEFAULT NULL,
+  `ANCHOR_ID` int(1) unsigned DEFAULT NULL,
+  `ADDRESS_1` varchar(1024) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `ADDRESS_2` varchar(1024) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `CITY` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `POSTAL_CODE` varchar(16) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `REGION` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `PROVINCE` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `COUNTRY` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `COUNTRY_CODE` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `LOC_ADDR_ID` int(1) unsigned NOT NULL DEFAULT '0',
+  `IS_DEF` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`TYPE_ID`,`ENTITY_TYPE_ID`,`ENTITY_ID`),
+  KEY `IX_B_CRM_ADDR_1` (`ENTITY_TYPE_ID`,`TYPE_ID`,`ADDRESS_1`(255),`ENTITY_ID`),
+  KEY `IX_B_CRM_ADDR_3` (`ENTITY_TYPE_ID`,`TYPE_ID`,`CITY`,`ENTITY_ID`),
+  KEY `IX_B_CRM_ADDR_4` (`ENTITY_TYPE_ID`,`TYPE_ID`,`POSTAL_CODE`,`ENTITY_ID`),
+  KEY `IX_B_CRM_ADDR_5` (`ENTITY_TYPE_ID`,`TYPE_ID`,`REGION`,`ENTITY_ID`),
+  KEY `IX_B_CRM_ADDR_6` (`ENTITY_TYPE_ID`,`TYPE_ID`,`PROVINCE`,`ENTITY_ID`),
+  KEY `IX_B_CRM_ADDR_7` (`ENTITY_TYPE_ID`,`TYPE_ID`,`COUNTRY`,`ENTITY_ID`),
+  KEY `IX_B_CRM_ADDR_8` (`ANCHOR_TYPE_ID`,`TYPE_ID`,`ADDRESS_1`(255),`ANCHOR_ID`),
+  KEY `IX_B_CRM_ADDR_10` (`ANCHOR_TYPE_ID`,`TYPE_ID`,`CITY`,`ANCHOR_ID`),
+  KEY `IX_B_CRM_ADDR_11` (`ANCHOR_TYPE_ID`,`TYPE_ID`,`POSTAL_CODE`,`ANCHOR_ID`),
+  KEY `IX_B_CRM_ADDR_12` (`ANCHOR_TYPE_ID`,`TYPE_ID`,`REGION`,`ANCHOR_ID`),
+  KEY `IX_B_CRM_ADDR_13` (`ANCHOR_TYPE_ID`,`TYPE_ID`,`PROVINCE`,`ANCHOR_ID`),
+  KEY `IX_B_CRM_ADDR_14` (`ANCHOR_TYPE_ID`,`TYPE_ID`,`COUNTRY`,`ANCHOR_ID`),
+  KEY `IX_B_CRM_ADDR_15` (`ANCHOR_TYPE_ID`,`ANCHOR_ID`,`TYPE_ID`),
+  KEY `IX_B_CRM_ADDR_16` (`LOC_ADDR_ID`),
+  KEY `IX_B_CRM_ADDR_17` (`ENTITY_TYPE_ID`,`TYPE_ID`,`ADDRESS_2`(255),`ENTITY_ID`),
+  KEY `IX_B_CRM_ADDR_18` (`ANCHOR_TYPE_ID`,`TYPE_ID`,`ADDRESS_2`(255),`ANCHOR_ID`),
+  KEY `IX_B_CRM_ADDR_19` (`ENTITY_ID`,`ENTITY_TYPE_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
+
+
+
+
+CREATE TABLE `b_cache_tag` (
+  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `SITE_ID` char(2) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `CACHE_SALT` char(4) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `RELATIVE_PATH` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `TAG` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `ix_b_cache_tag_0` (`SITE_ID`,`CACHE_SALT`,`RELATIVE_PATH`(50)),
+  KEY `ix_b_cache_tag_1` (`TAG`)
+) ENGINE=InnoDB AUTO_INCREMENT=102 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
+
+
+CREATE TABLE `b_user_access` (
+  `ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `USER_ID` int(11) DEFAULT NULL,
+  `PROVIDER_ID` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `ACCESS_CODE` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `ix_uac_user_provider` (`USER_ID`,`PROVIDER_ID`),
+  KEY `ix_uac_user_access` (`USER_ID`,`ACCESS_CODE`),
+  KEY `ix_uac_access` (`ACCESS_CODE`),
+  KEY `ix_uac_provider` (`PROVIDER_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
+
+
+
+CREATE TABLE `b_timeman_monitor_user_log` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `DATE_LOG` date NOT NULL,
+  `USER_ID` int(11) NOT NULL,
+  `PRIVATE_CODE` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
+  `ENTITY_ID` int(11) NOT NULL,
+  `TIME_SPEND` int(11) NOT NULL DEFAULT '0',
+  `DESKTOP_CODE` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `IX_B_TIMEMAN_MONITOR_USER_LOG_2` (`USER_ID`,`DATE_LOG`,`DESKTOP_CODE`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
+
+
+ALTER TABLE `b_user_access_check`
+  ADD UNIQUE KEY `ux_uac_user_provider` (`USER_ID`,`PROVIDER_ID`);
+  
+  CRE ATE INDEX ux_uac_user_provider ON b_user_access_check (USER_ID);

@@ -1,0 +1,82 @@
+:root {
+  --mine-shaft: #333;
+  --mountain-mist: #909090;
+  --silver: #C0C0C0;
+  --romance: #FFF;
+  --romance-rgb: 255, 255, 255;
+  --horizon: #548EAA;
+  --horizon-rgb: 84, 142, 170;
+  --astral: #39728E;
+  --fuzzy-wuzzy-brown: #D04E4E;
+  --fuzzy-wuzzy-brown-rgb: 208, 78, 78;
+  --christi: #7AA600;
+  --christi-rgb: 122, 166, 0;
+  --vida-loca: #548221;
+  --vida-loca-rgb: 84, 130, 33;
+  --asphalt: #000;
+  --asphalt-rgb: 0, 0, 0;
+  --shark: #1F2225;
+  --shark-rgb: 31, 34, 37;
+  --limed-spruce: #303B44;
+  --limed-spruce-rgb: 48, 59, 68;
+  --seashell: #F0F0F0;
+  --desert-storm: #F7F7F7;
+  --rolling-stone: #6F7577;
+  --rolling-stone-rgb: 111, 117, 119;
+  --gull-gray: #929CA5;
+  --gull-gray-rgb: 146, 156, 165;
+  --loblolly: #BBCDD6;
+  --frost: #ECF7DF;
+  --linen: #FEEFE1;
+  --aqua-haze: #EFF6FA;
+  --header-footer-text: var(--romance);
+  --header-footer-text-rgb: var(--romance-rgb);
+  --my-comment: var(--linen);
+
+  /* complexity */
+  --cerulean: #49ADDF;
+  --mandy: #EF6C82;
+  --emerald: #47C270;
+  --emerald-rgb: 71, 194, 112;
+
+  /* comments */
+  --solitude: #E7F3FF;
+  --misty-rose: #FFE8EB;
+  --gossip: #D2EC93;
+
+  /* megapost header */
+  --anakiwa: #9DF;
+  --mint-green: #99FFA7;
+  --lavender-rose: #FF99F7;
+  --mona-lisa: #FFA299;
+  --pale-canary: #FF9;
+
+  /* labels */
+  --dodger-blue: #2385E7;
+  --dodger-blue-rgb: 35, 133, 231;
+  --sorbus: #F77D05;
+  --sorbus-rgb: 247, 125, 5;
+  --scarlet: #DB0000;
+  --scarlet-rgb: 219, 0, 0;
+  --apple: #1DA53D;
+  --apple-rgb: 29, 165, 61;
+  --deluge: #6667a3;
+  --deluge-rgb: 102, 103, 163;
+  --dark-orchid: #A400DB;
+  --dark-orchid-rgb: 164, 0, 219;
+  --mulberry: #C23D96;
+  --mulberry-rgb: 194, 61, 150;
+  --pelorous: #099CAA;
+  --pelorous-rgb: 9, 156, 170;
+
+  /* удалить после темной темы */
+  --text-light-foreground-base: var(--mountain-mist);
+  --text-normal-foreground-base: var(--mine-shaft);
+  --text-strong-foreground-base: var(--mine-shaft);
+
+  /*  // TMkit пока придется оставить иначе не билдится проект
+  --palette-emphasis-color-primary: #77a8d0;
+  --palette-emphasis-color-secondary: #4d80aa; */
+
+  --formula-filter: invert(0);
+}

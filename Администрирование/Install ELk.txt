@@ -1,0 +1,125 @@
+https://techviewleo.com/install-elastic-stack-elk-8-on-ubuntu/
+https://itobereg.ru/services/install-elasticsearch
+https://www.dmosk.ru/instruktions.php?object=elk-centos#clients-install-centos
+https://serveradmin.ru/ustanovka-i-nastroyka-elasticsearch-logstash-kibana-elk-stack/
+##########Установка стека ELK###########
+ELK(master):192.168.205.11
+host(node1):192.168.205.111
+Открыть порты 80,443,9200,5601,5044
+########1.добавляем репозиторий
+echo "deb [trusted=yes] https://mirror.yandex.ru/mirrors/elastic/8/ stable main" | sudo tee /etc/apt/sources.list.d/elastic-8.x.list
+apt updade
+########2.устанавливаем java
+sudo apt install vim default-jdk -y
+####3.Устанавливаем elasticsearch
+sudo apt install elasticsearch
+#Сохраняем данные от еластики
+sudo nano /etc/elasticsearch/elasticsearch.yml
+#############################################################################################
+cluster.name: my-application
+node.name: node-1
+#network.host: 192.168.205.11(ip машины с elk)
+
+# --------------------------------------------------------------------------------
+
+# Enable security features
+xpack.security.enabled: false
+
+xpack.security.enrollment.enabled: false
+
+# Enable encryption for HTTP API client connections, such as Kibana, Logstash, and Agents
+xpack.security.http.ssl:
+  enabled: false
+  keystore.path: certs/http.p12
+
+# Enable encryption and mutual authentication between cluster nodes
+xpack.security.transport.ssl:
+  enabled: false
+################################################################################################
+sudo systemctl start elasticsearch
+sudo systemctl start elasticsearch
+curl -k -u elastic:password https://localhost:9200
+####4.Установи logstash
+sudo apt install logstash
+#####Создадим файл который будет принимать логи
+sudo nano /etc/logstash/conf.d/beats.conf
+#################################################################################################
+input {
+  beats {
+    port => 5044
+  }
+}
+filter {
+  if [type] == "syslog" {
+     grok {
+        match => { "message" => "%{SYSLOGLINE}" }
+  }
+     date {
+        match => [ "timestamp", "MMM  d HH:mm:ss", "MMM dd HH:mm:ss" ]
+     }
+  }
+}
+output {
+  elasticsearch {
+    hosts => ["localhost:9200"]
+    index => "%{[@metadata][beat]}-%{+YYYY.MM.dd}"
+  }
+}
+####################################################################################################
+sudo systemctl start logstash
+sudo systemctl enable logstash
+#####5. Установим кибану
+sudo apt install kibana
+sudo nano /etc/kibana/kibana.yml
+###################################################################################################
+# line 11 : uncomment and change (listen all)
+server.host: "0.0.0.0"
+
+# line 32 : uncomment and change (specify own hostname)
+server.name: "kibana-server"
+
+# line 43 : uncomment and change if you need
+# set if elasticsearch and Kibana are running on different Hosts
+elasticsearch.hosts: ["http://localhost:9200"]
+#elasticsearch.hosts: ["http://192.168.205.11:9200"]
+####################################################################################################
+sudo systemctl start kibana
+sudo systemctl enable kibana
+####6.Устанавливаем filebeat
+#Deb
+sudo apt install filebeat
+#rpm
+необходми взять файл из этой папки,закинуть его на сервер,распокавать 
+rpm -ivh filebeat-*.rpm
+sudo nano /etc/filebeat/filebeat.yml
+#коментируем еластику###############################################################################
+#-------------------------- Elasticsearch output ------------------------------
+#output.elasticsearch:
+  # Array of hosts to connect to.
+  #hosts: ["localhost:9200"]
+#раскоменчиваем логстэш############################################################################
+#----------------------------- Logstash output --------------------------------
+output.logstash:
+  # The Logstash hosts
+  hosts: ["192.168.205.11:5044"]
+#Прописываем значения и какие логи собираем########################################################
+filebeat.inputs:
+
+# Each - is an input. Most options can be set at the input level, so
+# you can use different inputs for various configurations.
+# Below are the input specific configurations.
+
+- type: filestream
+
+  # Change to true to enable this input configuration.
+  enabled: true
+
+  # Paths that should be crawled and fetched. Glob based paths.
+  paths:
+    - /var/log/*.log
+    #- c:\programdata\elasticsearch\logs\*
+##########################################################################################################
+sudo systemctl enable --now filebeat
+sudo filebeat modules enable system
+sudo filebeat setup --index-management -E output.logstash.enabled=false -E 'output.elasticsearch.hosts=["192.168.205.11:9200"]'
+sudo filebeat setup -E output.logstash.enabled=false -E output.elasticsearch.hosts=['192.168.205.11:9200'] -E setup.kibana.host=192.168.205.11:5601

@@ -1,0 +1,27 @@
+name: Deploy to Test Server
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Deploy to Server
+        uses: appleboy/ssh-action@master
+        with:
+          host: 91.240.84.59
+          port: 2987
+          username: github
+          password: Meduza80
+          script: |
+            rm -rf ~/esb-crm-frontend
+            git clone git@github.com:sotnikov-studio/crm-frontend.git esb-crm-frontend
+            cd ~/esb-crm-frontend && yarn install && yarn build
+            pm2 reload frontend

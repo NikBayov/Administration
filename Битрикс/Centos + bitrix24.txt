@@ -1,0 +1,124 @@
+Устанавливаем Centos 7
+1.Включаем сеть 
+systemctl stop firewalld
+systemctl disable firewalld
+vi /etc/yum.repos.d/CentOS-Base.repo
+:%d -удалить все строки
+
+
+[base]
+name=CentOS-$releasever - Base
+baseurl=http://vault.centos.org/7.9.2009/os/$basearch/
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+
+[updates]
+name=CentOS-$releasever - Updates
+baseurl=http://vault.centos.org/7.9.2009/updates/$basearch/
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+
+[extras]
+name=CentOS-$releasever - Extras
+baseurl=http://vault.centos.org/7.9.2009/extras/$basearch/
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+
+[centosplus]
+name=CentOS-$releasever - Plus
+baseurl=http://vault.centos.org/7.9.2009/centosplus/$basearch/
+gpgcheck=1
+enabled=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+
+
+yum upgrade -y
+yum install net-tools -y
+
+Устанавливаем Bitrix24
+#https://o2it.ru/blog/ustanovka-korobochnoj-versii-bitriks24/
+yum install wget -y
+wget http://repos.1c-bitrix.ru/yum/bitrix-env.sh
+chmod +x bitrix-env.sh
+./bitrix-env.sh
+Создаём pool
+Обновляем php
+
+Настраиваем почту
+#https://dev.1c-bitrix.ru/learning/course/?COURSE_ID=32&CHAPTER_ID=08853&LESSON_PATH=3903.4862.8809.8847.8853
+#https://dev.1c-bitrix.ru/learning/course/?COURSE_ID=32&LESSON_ID=12265&LESSON_PATH=3903.4862.8809.8847.8853.12265
+#https://wersis.ru/bitrix24/proverka-pochty/
+#https://dev.1c-bitrix.ru/community/webdev/user/35407/blog/1225/?commentId=8148
+В скрипт /home/bitrix/www/bitrix/setting.php
+Вписываем:
+#crypto' => 
+ # array (
+ #   'value' => 
+  #  array (
+    #    'crypto_key' => 'zsfyaikd270aed6f0pczhtxyeyodbdgg',
+  #  ),
+ #   'readonly' => true,
+ # ),
+  'smtp' => 
+  array (
+    'value' => 
+    array (
+        'enabled' => true,
+		'debug' => true,
+    ),
+    'readonly' => true,
+),
+
+Настраиваем /home/bitrix/.msmtprc
+tls_starttls off
+Проверяем почту:
+php -r "mail('bayovnik@mail.ru', 'Test', 'Test');"
+
+
+
+
+#Настраиваем Монитоинг
+
+в Bitrix vm:
+5 Configure pool monitoring1
+Создаём пароли
+Do you want to set up another email address to receive alerts? (Y|n) y
+Enter the email address (ex. bob@example.org): почта с которой отправлются письма
+Enter the server address or DNS (default: 127.0.0.1): smtp-сервер
+Enter the server port (default: 25):нужный порт
+Do you want to use SMTP authentication on the smtp.mail.ru:465 (N|y): y
+Enter login (default: bayovnik@mail.ru): логин
+Enter password: CfzftfNW0k4Nq8iZh7EZ
+Enter SMTP authentication type (default: auto):plain(если нельзя- auto)
+Открыть файл настроек Nagios, обычно расположенный по пути /etc/nagios/nagios.cfg
+# NOTIFICATIONS OPTION
+enable_notifications=1
+
+# ADMINISTRATOR EMAIL/PAGER ADDRESSES
+admin_email=ваш_адрес_электронной_почты
+в файле /etc/nagios/.msmtprc изменяем на(пример):
+# Ansible managed
+account default
+host smtp.mail.ru
+port 465
+from bayovnik@mail.ru
+logfile /var/log/nagios/msmtp.log
+
+# auth options
+user bayovnik@mail.ru
+password CfzftfNW0k4Nq8iZh7EZ
+auth plain (ОЧЕНЬ ВАЖНО)
+
+# tls options
+tls on
+tls_starttls off  (ОЧЕНЬ ВАЖНО)
+tls_certcheck off
+
+systemctl reload nagios
+
+
+#https://dev.1c-bitrix.ru/learning/course/?COURSE_ID=32&CHAPTER_ID=09377&LESSON_PATH=3903.4862.8809.9377
+Настройка Push/RTC NodeJS.
+1.В главном меню виртуальной машины выбрать пункт 9. Configure Push/RTC service for the pool > 1. Install/Update NodeJS RTC Service:
+2.Ввести имя хоста, где нужно запустить NodeJS RTC сервис (в примере мы выбрали server1 c запущенным сервисом NginxStreamModule), согласиться на смену модуля NginxStreamModule на NodeJS Push:
+3.Подождать, пока задачи по запуску NodeJS RTC Push&Pull сервера будут закончены:

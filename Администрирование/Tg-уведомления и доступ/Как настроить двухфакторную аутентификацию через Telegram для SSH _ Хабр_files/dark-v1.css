@@ -1,0 +1,135 @@
+:root {
+  /* сделать это через переменные scss */
+  --alto: #ddd;
+  --romance-dark: #fff;
+  --romance-dark-rgb: 255, 255, 255;
+  --abbey: #4d4d4d;
+  --bermuda-gray: #6c8694;
+  --buccaneer: #603339;
+  --bunker: #171717;
+  --bunker-rgb: 23, 23, 23;
+  --cadillac: #c95e70;
+  --carnation: #ff7373;
+  --carnation-rgb: 255, 115, 115;
+  --cedar: #39181a;
+  --cod-gray: #080808;
+  --cod-gray-rgb: 8, 8, 8;
+  --curious-blue: #3193c4;
+  --deepsky-blue: #4cb7eb;
+  --deepsky-blue-rgb: 76, 183, 235;
+  --elephant: #1a334d;
+  --firefly: #1a2328;
+  --fruit-salad: #3b9b5b;
+  --fruit-salad-rgb: 59, 155, 91;
+  --geraldine: #ff8f84;
+  --heliotrope: #f07ee6;
+  --hot-pink: #e064b7;
+  --hot-pink-rgb: 224, 100, 183;
+  --ironside-gray: #666;
+  --ironside-gray-rgb: 102, 102, 102;
+  --khaki: #e4e481;
+  --light-green: #7eec97;
+  --light-green-rgb: 126, 236, 151;
+  --lightsky-blue: #80d6ff;
+  --mantis: #91c15d;
+  --mantis-rgb: 145, 193, 93;
+  --pastel-green: #78da85;
+  --pink-flamingo: #d65aff;
+  --pink-flamingo-rgb: 214, 90, 255;
+  --pistachio: #84b300;
+  --pistachio-rgb: 132, 179, 0;
+  --portage: #5aacff;
+  --portage-rgb: 90, 172, 255;
+  --seagull: #89ccee;
+  --seaweed: #222e14;
+  --shady-lady: #aaa;
+  --shady-lady-rgb: 170, 170, 170;
+  --spray: #00e2f7;
+  --spray-rgb: 0, 226, 247;
+  --sunglo: #f47676;
+  --sunglo-rgb: 244, 118, 118;
+  --sunshade: #ff9f40;
+  --sunshade-rgb: 255, 159, 64;
+  --thunder: #262626;
+  --waiouru: #313d14;
+  --wistful: #a0a1d7;
+  --wistful-rgb: 160, 161, 215;
+  --woodsmoke: #0d0d0d;
+  --woodsmoke-rgb: 13, 13, 13;
+  --bracken: #3E2704;
+  --mine-shaft: var(--alto);
+  --mountain-mist: var(--shady-lady);
+  --silver: var(--abbey);
+  --romance: var(--bunker);
+  --romance-rgb: var(--bunker-rgb);
+  --horizon: var(--deepsky-blue);
+  --horizon-rgb: var(--deepsky-blue-rgb);
+  --astral: var(--lightsky-blue);
+  --fuzzy-wuzzy-brown: var(--carnation);
+  --fuzzy-wuzzy-brown-rgb: var(--carnation-rgb);
+  --christi: var(--pistachio);
+  --christi-rgb: var(--pistachio-rgb);
+  --vida-loca: var(--mantis);
+  --vida-loca-rgb: var(--mantis-rgb);
+  --asphalt: var(--romance-dark);
+  --asphalt-rgb: var(--romance-dark-rgb);
+  --shark: var(--cod-gray);
+  --shark-rgb: var(--cod-gray-rgb);
+  --limed-spruce: var(--woodsmoke);
+  --limed-spruce-rgb: var(--woodsmoke-rgb);
+  --seashell: var(--cod-gray);
+  --desert-storm: var(--thunder);
+  --rolling-stone: var(--shady-lady);
+  --rolling-stone-rgb: var(--shady-lady-rgb);
+  --gull-gray: var(--ironside-gray);
+  --gull-gray-rgb: var(--ironside-gray-rgb);
+  --loblolly: var(--bermuda-gray);
+  --frost: var(--seaweed);
+  --linen: var(--cedar);
+  --aqua-haze: var(--firefly);
+  --header-footer-text: var(--romance-dark);
+  --header-footer-text-rgb: var(--romance-dark-rgb);
+  --my-comment: var(--bracken);
+
+  /* complexity */
+  --cerulean: var(--curious-blue);
+  --mandy: var(--cadillac);
+  --emerald: var(--fruit-salad);
+  --emerald-rgb: var(--fruit-salad-rgb);
+
+  /* comments */
+  --solitude: var(--elephant);
+  --misty-rose: var(--buccaneer);
+  --gossip: var(--waiouru);
+
+  /* megapost header */
+  --anakiwa: var(--seagull);
+  --mint-green: var(--pastel-green);
+  --lavender-rose: var(--heliotrope);
+  --mona-lisa: var(--geraldine);
+  --pale-canary: var(--khaki);
+
+  /* labels */
+  --dodger-blue: var(--portage);
+  --dodger-blue-rgb: var(--portage-rgb);
+  --sorbus: var(--sunshade);
+  --sorbus-rgb: var(--sunshade-rgb);
+  --scarlet: var(--sunglo);
+  --scarlet-rgb: var(--sunglo-rgb);
+  --apple: var(--light-green);
+  --apple-rgb: var(--light-green-rgb);
+  --deluge: var(--wistful);
+  --deluge-rgb: var(--wistful-rgb);
+  --dark-orchid: var(--pink-flamingo);
+  --dark-orchid-rgb: var(--pink-flamingo-rgb);
+  --mulberry: var(--hot-pink);
+  --mulberry-rgb: var(--hot-pink-rgb);
+  --pelorous: var(--spray);
+  --pelorous-rgb: var(--spray-rgb);
+
+  /* удалить после темной темы */
+  --text-light-foreground-base: var(--mountain-mist);
+  --text-normal-foreground-base: var(--mine-shaft);
+  --text-strong-foreground-base: var(--mine-shaft);
+  --formula-filter: invert(1);
+}

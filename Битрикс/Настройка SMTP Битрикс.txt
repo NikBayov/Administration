@@ -1,0 +1,32 @@
+
+#/home/bitrix/www/bitrix setting.php
+
+'smtp' => 
+  array (
+    'value' => 
+    array (
+        'enabled' => true,
+		'debug' => true,
+    ),
+    'readonly' => true,
+),
+
+
+пример
+'crypto' => 
+  array (
+    'value' => 
+    array (
+        'crypto_key' => 'zsfyaikd270aed6f0pczhtxyeyodbdgg',
+    ),
+    'readonly' => true,
+  ),
+  'smtp' => 
+  array (
+    'value' => 
+    array (
+        'enabled' => true,
+		'debug' => true,
+    ),
+    'readonly' => true,
+),
