@@ -1,0 +1,7 @@
+ССылка:https://rjaan.narod.ru/docs/admin/Wayland/sysadmin-use-gpu-passthrough-in-debian.html  - для разделения групп устройств IOMMU
+#GRUB_CMDLINE_LINUX_DEFAULT="quiet"
+GRUB_CMDLINE_LINUX_DEFAULT="quiet amd_iommu=on iommu=pt amd_iommu=on pcie_acs_override=downstream,multifunction"
+
+$nano /etc/default/grub
+
+$update-grub
