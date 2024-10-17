@@ -1,0 +1,31 @@
+name: Deploy to Test Server
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+     # - name: Install Dependencies
+        #run: composer update --prefer-dist --no-progress 
+        #--no-suggest
+
+#      - name: Run Tests
+        #run: php artisan test
+
+      - name: Deploy to Server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: github
+          password: Meduza80
+          port: 2987
+          script: |
+            cd ~/esb-crm-backend && composer update && git pull git@github.com:sotnikov-studio/esb-crm-backend.git dev

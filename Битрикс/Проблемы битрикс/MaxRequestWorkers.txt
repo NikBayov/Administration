@@ -1,0 +1,4 @@
+<IfModule mpm_prefork_module>
+ServerLimit 5000
+MaxRequestWorkers 5000
+</IfModule>

@@ -1,0 +1,53 @@
+#https://www.dmosk.ru/miniinstruktions.php?mini=get-letsencrypt
+#https://dev.1c-bitrix.ru/community/webdev/user/15916/blog/21311/?commentId=93493
+#https://dev.1c-bitrix.ru/learning/course/?COURSE_ID=32&LESSON_ID=11451&LESSON_PATH=3903.4862.8809.8873.11449.11451
+
+#Устанавлиеваем Certbot
+yum install certbot
+#Получаем первый сертификат
+certbot certonly --webroot --agree-tos --email nikbayov@gmail.com --webroot-path /usr/share/nginx/html/ -d nikbayov.ru -d www.nikbayov.ru
+#При подтверждении права на домен с TXT-записью:При подтверждении права на домен с TXT-записью:
+certbot certonly --manual --agree-tos --email nikbayov@gmail.com --preferred-challenges=dns -d nikbayov.ru -d www.nikbayov.ru
+#На запрос подтверждения отвечаем Y
+Данное сообщение говорит, что мы должны создать TXT-запись _acme-challenge.dmosk.ru 
+со значением W2SC9b88y2j2oUjhxVgS7Bphph9g5PqhkBq9KiWkLTm
+Создаем соответствующую запись в панели управления DNS, и в консоли сервера нажимаем Enter для продолжения. 
+Если, как в данном примере, мы запрашиваем сертификат для нескольких узлов, повторяем действия.
+#Автоматическое продление
+#Смотрим полный путь до скрипта certbot:
+which certbot
+#Открываем на редактирование cron и добавляем следующее:
+crontab -e
+0 0 * * 1,4 /usr/bin/certbot renew --noninteractive
+#/usr/bin/certbot-путь который выдал which
+systemctl reload nginx
+#При успешном завершении работы Certbot поздравляет Вас с генерацией сертификата и выдает следующее сообщение:
+IMPORTANT NOTES:
+ - If you lose your account credentials, you can recover through
+   e-mails sent to sammy@digitalocean.com
+ - Congratulations! Your certificate and chain have been saved at
+   /etc/letsencrypt/live/domen.com/fullchain.pem. Your
+   cert will expire on 2017-03-12. To obtain a new version of the
+   certificate in the future, simply run Let's Encrypt again.
+ - Your account credentials have been saved in your Let's Encrypt
+   configuration directory at /etc/letsencrypt. You should make a
+   secure backup of this folder now. This configuration directory will
+   also contain certificates and private keys obtained by Let's
+   Encrypt so making regular backups of this folder is ideal.
+ - If like Let's Encrypt, please consider supporting our work by:
+
+
+   Donating to ISRG / Let's Encrypt:   https://letsencrypt.org/donate
+   Donating to EFF:                    https://eff.org/donate-le
+#Настройка Nginx
+openssl dhparam -out /etc/nginx/ssl/dhparam.pem 2048
+#Открываем файл /etc/nginx/bx/conf/ssl.conf и прописываем в нем пути к только что полученным сертификатам
+ssl_certificate         /etc/letsencrypt/live/infospice.ru/fullchain.pem;
+ssl_certificate_key     /etc/letsencrypt/live/infospice.ru/privkey.pem; 
+#Сохраняем изменения, тестируем конфигурацию Nginx:
+ginx -t
+#Если никаких ошибок нет, перезапускаем Nginx:
+systemctl reload nginx
+
+
+194-67-108-173.cloudvps.regruhosting.ru

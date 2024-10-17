@@ -1,0 +1,6 @@
+docker container inspect [id-container or name] - узнать все данные контейнера
+docker exec -it [id-container or name] bash - запуск доп процесса внутри контейнера
+docker run -d --name [name_container] [image] - задание имени при создании контейнера
+docker container prune - удалить все остановленные контейнеры
+docker run -p(публикация) 8080(внешний порт):80(Порт контейнера) [image] - публикация порта
+docker run -v(подключение тома) ${PWD}(путь к локальной папке):/usr/share/nginx/html(путь к контейнерной папке) [image] -публикация томов

@@ -1,0 +1,10 @@
+fdisk -c -u -l
+fdisk -c -u /dev/sda
+d-удаляем раздел
+n создаём раздел
+w-сохр и выходим
+reboot
+sudo pvs
+sudo pvresize /dev/sda2
+df -h
+sudo lvextend -r -l +100%FREE /dev/mapper/centos-root
