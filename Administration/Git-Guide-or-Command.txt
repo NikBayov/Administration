@@ -74,5 +74,5 @@ $ git diff commit1 commit2
 # Посмотрть изменения, которые добавлены в staged-файлах.
 $git diff --staged
 
-#
-$
+# Удалить привязанный origin
+$ git remote rm origin
