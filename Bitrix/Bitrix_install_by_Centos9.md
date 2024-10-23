@@ -23,7 +23,7 @@ $ wget http://repo.bitrix.info/dnf/bitrix-env-9.sh && chmod +x bitrix-env-9.sh &
 $ reboot -h now
 ```
 ```
-$ ./bitrix-env-9.sh -s -p -H default -P -M 'Ie8HH2_8HO'
+$ ./bitrix-env-9.sh -s -p -H server1 -P -M 'Ie8HH2_8HO'
 ```
 ### Загружаем файл bitrixsetup.php в /home/bitrix/www и выдаём права
 
