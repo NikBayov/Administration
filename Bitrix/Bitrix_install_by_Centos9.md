@@ -1,6 +1,6 @@
 # Установка Bitix24(bitrix-vm)
 
-## При установке ОС необходимо
+### При установке ОС необходимо
 ```
 1. Выбрать редакцию  "Server";
 2. Инициализировать диск выбрав его и нажав "Done";
@@ -8,7 +8,7 @@
 4. Выбрать timezone.
 В конце установки нажать "Reboot now"
 ```
-## После установки ОС ввести:
+### После установки ОС ввести:
 
 ```
 $ dnf clean all && dnf update -y
@@ -31,3 +31,34 @@ $ ./bitrix-env-9.sh -s -p -H server1 -P -M 'Ie8HH2_8HO'
 $ chown -R bitrix:bitrix /home/bitrix/www
 ```
 ### После открываем Web-страницу http://your.ip.address/bitrixsetup.php  и настраиваем
+
+## Настраиваем почту
+### В скрипт /home/bitrix/www/bitrix/setting.php вписываем:
+```
+#crypto' => 
+ # array (
+ #   'value' => 
+  #  array (
+    #    'crypto_key' => '1312312341313213312',
+  #  ),
+ #   'readonly' => true,
+ # ),
+  'smtp' => 
+  array (
+    'value' => 
+    array (
+        'enabled' => true,
+		'debug' => true,
+    ),
+    'readonly' => true,
+),
+```
+
+### Далее настраиваем /home/bitrix/.msmtprc
+```
+tls_starttls off
+```
+### Проверяем почту:
+```
+$ php -r "mail('bayovnik@mail.ru', 'Test', 'Test');"
+```
