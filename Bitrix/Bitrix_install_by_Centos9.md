@@ -14,7 +14,7 @@
 $ dnf clean all && dnf update -y
 ```
 ```
-$ wget http://repo.bitrix.info/dnf/bitrix-env-9.sh && chmod +x bitrix-env-9.sh && ./bitrix-env-9.sh
+$ wget http://repo.bitrix.info/dnf/bitrix-env-9.sh && chmod +x bitrix-env-9.sh && ./bitrix-env-9.sh -s -p -H server1 -P -M 'Ie8HH2_8HO'
 ```
 
 ### Предложет выключить SeLinux вводим 'y' и после перезагружаем
