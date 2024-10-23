@@ -156,5 +156,6 @@ $ git remote rm origin
 3.Когда конфликты разрешены, сделать коммит:
 ```
 ```
-git commit --no-edit или git commit -m 'merge branch <название ветки>'.
+$ git commit --no-edit или    
+$ git commit -m 'merge branch <название ветки>'.
 ```
