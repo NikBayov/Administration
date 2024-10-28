@@ -54,7 +54,7 @@ $ chown -R bitrix:bitrix /home/bitrix/www
 ),
 ```
 
-### Далее настраиваем /home/bitrix/.msmtprc
+### Далее вписываем в файл /home/bitrix/.msmtprc
 ```
 tls_starttls off
 ```
