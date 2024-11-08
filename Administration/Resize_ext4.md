@@ -1,7 +1,7 @@
 ### Отключаем swap и закоменти строку в /etc/fstab
 
 ```
-$ swap
+$ swapoff -a
 $ nano /etc/fstab
   #UUID=d8961527-8bbb-49db-af52-e77808bbcb4c none            swap    sw              0       0
 ```
