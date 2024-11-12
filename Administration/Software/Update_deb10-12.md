@@ -52,7 +52,7 @@ deb-src http://security.debian.org/ bookworm-security main
 $ sudo apt update
 ```
 
-### Обновляем минимально после замены каждого из репозитория
+### Сначала меняем репозитории debian 10 на debian 11 и обновляем, после повторяет тоже для debian 12
 
 ```
 $ sudo apt upgrade --without-new-pkgs
