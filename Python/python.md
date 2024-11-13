@@ -2,10 +2,15 @@
 
 ```
 str = 'Nikita' (Строка)
+
 int = 10 (Целое число, отрицательное или положительное)
+
 float = 0.1 (Числа с плавающей точкой)
+
 list = [1, 2, 4] (Список)
+
 set = (Множества)
+
 bool = true (Булевы, может быть только True or False)
 
 ```
@@ -13,17 +18,29 @@ bool = true (Булевы, может быть только True or False)
 
 ```
 print()
+
 len()
+
 round()
+
 int()
+
 type()
+
 sum()
+
 min()
+
 str()
+
 id()
+
 input()
+
 max()
+
 bool()
+
 dir()
 
 ```
