@@ -1,4 +1,4 @@
-# Установка k8s v.1.30 через kubeadm на Debian 12.7, 1  mode node and 2 worker node
+# Установка k8s v.1.30 через kubeadm на Debian 12.7, 1  master node and 2 worker node
 
 ## Примечание: Все шаги со знаком `*` выполняются для всех node
 
