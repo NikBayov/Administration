@@ -19,7 +19,7 @@ nano /etc/fstab
 `k8s-w2`- Worker node 2
 
 ```
-sudo hostnamectl set-hostname k8sm 
+sudo hostnamectl set-hostname k8s-m 
 nano /etc/hosts
 
      127.0.0.1 localhost
