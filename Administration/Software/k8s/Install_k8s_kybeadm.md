@@ -134,8 +134,10 @@ sudo kubeadm join 10.128.0.28:6443 --token zvxm7y.z61zq4rzaq3rtipk \
 `kubectl delete node node-name`
 
 #### Удалить существующие файлы конфигурации
-`sudo rm -f /etc/kubernetes/kubelet.conf`
-`sudo rm -f /etc/kubernetes/pki/ca.crt`
+```
+sudo rm -f /etc/kubernetes/kubelet.conf
+sudo rm -f /etc/kubernetes/pki/ca.crt
+```
 
 #### Очистка конфигурации узла
 `kubeadm reset`
