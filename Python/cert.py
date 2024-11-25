@@ -1,3 +1,4 @@
+# Запрашиваем $domen.ru$ и $test.domen.ru$
 # Выпускаем сертификат на основной домен
 iptables -I INPUT -p tcp -m tcp --dport 80 -j ACCEPT # Открываем порт
 # Добавляем блок кода в конфиг по пути /etc/nginx/conf.d/letsencrypt.conf 
@@ -25,7 +26,7 @@ certbot certonly --webroot -w /var/www/app2 -d $domen.ru$
 # После выпускаем тестовый сертификат на тестовый домен
 # Выполняем команду на выпуск сертификата:
 # Часть /var/www/test/$domen$/web , тут указывается фактическая директория 
-certbot certonly --webroot -w /var/www/test/$domen$/web -d $test.domen$
+certbot certonly --webroot -w /var/www/test/$domen$/web -d $test.domen.ru$
 # Переходим к редактирования конфигурационных файлов на s-for1 ssh:172.17.0.18 root K.nsqGBYUDBY)512)   
 #Редактирование конфигурационного файла $domen$
 #Переходим в расположение /etc/puppetlabs/code/environments/cluster_frontend/modules/nginx/files/sites-enabled/prod_domen.conf , и находим необходимый нам конфигурационный файл.
