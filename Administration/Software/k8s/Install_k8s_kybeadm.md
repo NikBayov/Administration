@@ -1,4 +1,4 @@
-# Установка k8s v.1.30 через kubeadm на Debian 12.7, 1  master node and 2 worker node
+# Установка k8s v.1.31 через kubeadm на Debian 12.7, 1  master node and 2 worker node
 
 ## Примечание: Все шаги со знаком `*` выполняются для всех node
 
@@ -38,8 +38,8 @@ sudo apt-get install -y apt-transport-https ca-certificates curl
 
 ```
 sudo mkdir -p /etc/apt/keyrings
-curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.30/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
-echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.30/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.31/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.31/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
 ```
 
 ### Устанавливаем  стек k8s* 
@@ -53,7 +53,6 @@ sudo apt-mark hold kubelet kubeadm kubectl
 ### Активируем необходимые модули*
 
 ```
-sudo -i
 modprobe br_netfilter
 modprobe overlay
 ```
@@ -62,7 +61,7 @@ modprobe overlay
 
 ```
 echo "net.ipv4.ip_forward=1" >> /etc/sysctl.conf
-echo "net.bridge.bridge-nf-call-iptables=1" >> /etc/sysctl.conf
+echo "net.bridge.bridge-nf-call-iptables=1" >> /etc/sysctl.conf # Если есть iptables
 sysctl -p /etc/sysctl.conf
 ```
 
