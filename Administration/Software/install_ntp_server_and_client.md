@@ -139,6 +139,10 @@ makestep 1 3
 leapsectz right/UTC
 ```
 
+### Перезапускаем chrony
+
+`systemctl restart chrony`
+
 ### Проверяем синхронизацию с сервером
 
 `systemctl status chrony`
