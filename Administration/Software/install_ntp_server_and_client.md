@@ -124,8 +124,8 @@ sudo apt install chrony
 ### Редактируем конфигурационный файл /etc/chrony/chrony.conf
 
 ```
-confdir /etc/chrony/conf.d
-server <ip.local.ntp.server> iburst
+server <ip.local.ntp.server> iburst minpoll 1
+server 0.ru.pool.ntp.org minpoll 6
 sourcedir /run/chrony-dhcp
 sourcedir /etc/chrony/sources.d
 keyfile /etc/chrony/chrony.keys
@@ -137,6 +137,8 @@ maxupdateskew 100.0
 rtcsync
 makestep 1 3
 leapsectz right/UTC
+local stratum 10
+allow <ip.local.ntp.server>
 ```
 
 ### Перезапускаем chrony
