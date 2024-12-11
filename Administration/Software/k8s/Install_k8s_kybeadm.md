@@ -30,7 +30,7 @@ nano /etc/hosts
 
 ```
 sudo apt-get update -y
-sudo apt-get install -y apt-transport-https ca-certificates curl
+sudo apt-get install -y apt-transport-https ca-certificates curl gpg
 
 ```
 
