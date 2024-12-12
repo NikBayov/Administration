@@ -143,3 +143,12 @@ sudo rm -f /etc/kubernetes/pki/ca.crt
 
 #### Проверка конфигурации кластера
 `kubectl get nodes`
+
+#### Посмотреть статус pods
+`kubectl get pods --all-namespaces -o wide`
+
+#### Посмотреть логи pod
+`kubectl logs <pod-name> -n <namespace>`
+
+#### Перезапустить pod
+`kubectl delete pod <pod-name> -n <namespace>`
