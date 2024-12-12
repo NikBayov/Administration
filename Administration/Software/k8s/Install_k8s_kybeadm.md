@@ -85,7 +85,7 @@ version = 2
 ```
 sudo systemctl restart containerd            
 ```
-### Инициализируем кластер
+### Инициализируем кластер(k8s-m)
 ###### to access kubernetes from external network you need to additionaly set flag with external ip --apiserver-cert-extra-sans=158.160.111.211
 
 ```
