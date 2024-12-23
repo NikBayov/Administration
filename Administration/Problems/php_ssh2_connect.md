@@ -15,7 +15,7 @@ PubkeyAcceptedKeyTypes +ssh-rsa
 
  ```php
 <?php
-     $connection = ssh2_connect('172.17.27.51', 22, array(
+     $connection = ssh2_connect('ip.addres.ssh.server', 22, array(
          'hostkey' => 'ssh-rsa,ssh-dss',
          'kex' => 'diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1',
          'client_to_server' => 'aes128-ctr,aes192-ctr,aes256-ctr',
@@ -26,8 +26,8 @@ if (!$connection)
 
 {     die('Connection failed'); }
 if (ssh2_auth_pubkey_file($connection, 'root',
-                         '/root/.ssh/id_rsa.pub',
-                         '/root/.ssh/id_rsa', 'passphrase'))
+                         '/root/.ssh/id_rsa.pub', #path to key
+                         '/root/.ssh/id_rsa', 'passphrase')) #path to key
 
 {     echo "Authentication Successful!\n"; }
 else
