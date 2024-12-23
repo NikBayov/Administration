@@ -1,4 +1,4 @@
-### Добавляем в файл конфигурации на сервере /etc/ssh/sshd_config:
+### Добавляем в файл конфигурации на сервере /etc/ssh/sshd_config: <span style="color:blue">some *blue* text</span>.
 
 ```
 Ciphers aes256-gcm@openssh.com,chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr
