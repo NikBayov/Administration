@@ -35,4 +35,4 @@ sudo install minikube /usr/local/bin/
 
 ### Запускаем minikube(--forse это чтоб запускать от root)
 
-`minikube start --driver=qemu --forse`
+`minikube start --driver=qemu --force`
