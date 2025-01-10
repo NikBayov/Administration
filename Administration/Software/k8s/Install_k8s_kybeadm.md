@@ -152,3 +152,6 @@ sudo rm -f /etc/kubernetes/pki/ca.crt
 
 #### Перезапустить pod
 `kubectl delete pod <pod-name> -n <namespace>`
+
+#### Посмотреть события кластера
+`kubectl get events`
