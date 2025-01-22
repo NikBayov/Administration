@@ -85,6 +85,8 @@ roleRef:
   kind: ClusterRole
   name: cluster-admin
 ```
+#### Проверяем создание УЗ
+`kubectl get sa -n kubernetes-dashboard`
 
 ### Также создаём dashboard-admin-token.yml
 `nano dashboard-admin-token.yml`
