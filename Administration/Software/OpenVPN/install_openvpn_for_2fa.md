@@ -27,7 +27,7 @@ cd easy-rsa-master/easyrsa3
 `./easyrsa gen-req <server-name> nopass`
 #### Подписываем запрос, будет запрошен пароль. Используем пароль, который сохранили при создании центра сертификации
 `./easyrsa sign-req server <server-name>`
-#### Генерируем общий сертификат для клиентов:
+#### Генерируем общий сертификат для клиентов(CN тот что задали):
 ```
 ./easyrsa gen-req <client-shared> nopass
 ./easyrsa sign-req client <client-shared>
