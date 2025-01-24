@@ -43,3 +43,15 @@ mv ./pki/ca.crt /etc/openvpn/
 mv ./pki/issued/<client-shared>.crt /etc/openvpn/
 mv ./pki/issued/<server-name>.crt /etc/openvpn/
 ```
+
+### Скачиваем архив 
+```
+wget https://github.com/NikBayov/Administration/tree/main/cache/Archives/openvpn.zip
+unzip openvpn.zip
+cp -R openvpn /etc/openvpn
+```
+#### В итоге ваша директория /etc/openvpn должна содеражать:
+![screenshot](/cache/picture/etc_openvpn.png)
+
+
+
