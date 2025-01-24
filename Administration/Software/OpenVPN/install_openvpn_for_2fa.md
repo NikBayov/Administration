@@ -50,8 +50,27 @@ wget https://github.com/NikBayov/Administration/tree/main/cache/Archives/openvpn
 unzip openvpn.zip
 cp -R openvpn /etc/openvpn
 ```
-#### В итоге ваша директория /etc/openvpn должна содеражать:
+#### В итоге ваша директория /etc/openvpn должна содержать:
 ![screenshot](/cache/picture/etc_ovpn.png)
+
+##### В server.conf можете указать подсеть в которой будет выдавать ip-адреса openvpn, у меня 192.168.8.0 
+`server 192.168.8.0 255.255.255.0`
+
+### Создание пользователей
+
+#### в файл user_credentials.txt прописываем нужного пользователя в формате `username:password`
+```
+echo n.bayov@example.com:12345678 >> /etc/openvpn/user_credentials.txt
+```
+#### с помощью скрипта oath-secret-gen.sh генерируем секрет для созданного пользователя
+```
+./oath-secret-gen.sh n.bayov@examle.com
+```
+#### добавляем последнюю строку в файл /etc/openvpn/oath.secrets
+```
+echo n.bayov@example.com:3173a5c8242af43738bbb9ca90d9d7 >> /etc/openvpn/oath.secrets
+```
+
 
 
 
