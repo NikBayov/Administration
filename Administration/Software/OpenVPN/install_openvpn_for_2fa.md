@@ -119,4 +119,13 @@ remote-cert-tls server
 </key>
 ```
 
+### Режим отладки авторизации
+```
+tail -f /var/log/mfa_openvpn.log
+```
+### Проверка аторизации
 
+```
+echo -e "n.bayov@example.com\n12345678:898137" > /tmp/test_passfile
+./oath.sh /tmp/test_passfile
+```
