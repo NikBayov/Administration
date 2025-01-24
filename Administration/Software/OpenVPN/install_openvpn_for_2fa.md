@@ -51,7 +51,7 @@ unzip openvpn.zip
 cp -R openvpn /etc/openvpn
 ```
 #### В итоге ваша директория /etc/openvpn должна содеражать:
-![screenshot](/cache/picture/etc_openvpn.png)
+![screenshot](/cache/picture/etc_ovpn.png)
 
 
 
