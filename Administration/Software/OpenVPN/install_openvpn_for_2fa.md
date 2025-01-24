@@ -1,6 +1,32 @@
 # Установка OpenVPN-server для двухфакторной аутентификации(Debian 12)
 
 ### Устанавливаем необходимые пакеты
+
 ```
 sudo apt update
-sudo apt install openvpn oathtool qrencode curl nano
+sudo apt install openvpn oathtool qrencode curl nano -y
+```
+
+### Устанавливаем структуру ключей easyrsa3
+
+```
+mkdir /src; cd /src && wget https://github.com/OpenVPN/easy-rsa/archive/master.zip
+apt install unzip
+unzip master.zip
+cd easy-rsa-master/easyrsa3
+./easyrsa init-pki
+```
+
+#### Создаём центр сертификации
+`./easyrsa build-ca`
+В процессе вы получите запрос на ввод пароля от 4 до 32 символов, сохраните его, он нам потребуется в будущем:
+![screenshot](/cache/picture/ca_ovpn.png)
+#### Теперь генерируем запрос на создание сертификата, чтобы в дальнейшем подключаться к серверу без пароля
+`./easyrsa gen-req <server-name> nopass`
+#### Подписываем запрос, будет запрошен пароль. Используем пароль, который сохранили при создании центра сертификации
+`./easyrsa sign-req server <server-name>`
+#### Генерируем общий сертификат для клиентов:
+```
+./easyrsa gen-req <client-shared> nopass
+./easyrsa sign-req client <client-shared>
+```
