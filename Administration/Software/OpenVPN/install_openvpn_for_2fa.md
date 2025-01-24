@@ -30,3 +30,14 @@ cd easy-rsa-master/easyrsa3
 ./easyrsa gen-req <client-shared> nopass
 ./easyrsa sign-req client <client-shared>
 ```
+#### Генерируем файл с параметрами Диффи-Хеллмана (dh.pem):
+`./easyrsa gen-dh`
+###
+```
+mv ./pki/dh.pem /etc/openvpn/dh1024.pem
+mv ./pki/private/<client-shared>.key /etc/openvpn/
+mv ./pki/private/<server-name>.key /etc/openvpn/
+mv ./pki/ca.crt /etc/openvpn/
+mv ./pki/issued/<client-shared>.crt /etc/openvpn/
+mv ./pki/issued/<server-name>.crt /etc/openvpn/
+```
