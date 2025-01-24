@@ -70,7 +70,53 @@ echo n.bayov@example.com:12345678 >> /etc/openvpn/user_credentials.txt
 ```
 echo n.bayov@example.com:3173a5c8242af43738bbb9ca90d9d7 >> /etc/openvpn/oath.secrets
 ```
+#### Генерируем qrcode для любого otp приложения(google authenticator и т.д., яндекс ключ не советую)
+```
+qrencode -o otp_qr.png otpauth://totp/MFA%20Sample:n.bayov@example.com?secret=GFZ2LSBEFL2DOOF3XHFJBWOX
+```
+##### Проверка генерации TOTP вручную
+```
+oathtool --totp <secret>
+oathtool --totp 3173a5c8242af43738bbb9ca90d9d7 # пример
+```
+##### Если есть iptables
+```
+iptables -t nat -A POSTROUTING -s 192.168.8.0/24 -o eth0 -j MASQUERADE
+echo 1 > /proc/sys/net/ipv4/ip_forward
+```
+#### Запускаем openvpn-server и проверяем, что нет ошибок
 
+```
+systemctl start openvpn@server
+systemctl status openvpn@server
+```
 
+### Создаём конфиг клиента 
+```
+remote <your_external_ip_server> 1194
+dev tun
+proto udp4
+client
+verb 4
+keepalive 10 60
+persist-tun
+auth-user-pass
+remote-cert-tls server
+<ca>
+-----BEGIN CERTIFICATE-----
+ваш /etc/openvpn/ca.crt
+-----END CERTIFICATE-----
+</ca>
+<cert>
+-----BEGIN CERTIFICATE-----
+ваш /etc/openvpn/client-shared.crt
+-----END CERTIFICATE-----
+</cert>
+<key>
+-----BEGIN PRIVATE KEY-----
+ваш /etc/openvpn/client-shared.key
+-----END PRIVATE KEY-----
+</key>
+```
 
 
