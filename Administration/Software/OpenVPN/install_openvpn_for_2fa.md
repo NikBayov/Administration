@@ -34,7 +34,7 @@ cd easy-rsa-master/easyrsa3
 ```
 #### Генерируем файл с параметрами Диффи-Хеллмана (dh.pem):
 `./easyrsa gen-dh`
-###
+### Переносим полученные сертификаты
 ```
 mv ./pki/dh.pem /etc/openvpn/dh1024.pem
 mv ./pki/private/<client-shared>.key /etc/openvpn/
