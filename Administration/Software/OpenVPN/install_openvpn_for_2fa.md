@@ -131,6 +131,7 @@ tail -f /var/log/mfa_openvpn.log
      echo "MFA Token: $mfatoken"
      echo "Generated TOTP Code: $code"
 ```
+#### ВВодим логин n<пароль>:код и проверяем результат
 ```
 echo -e "n.bayov@example.com\n12345678:898137" > /tmp/test_passfile
 ./oath.sh /tmp/test_passfile
