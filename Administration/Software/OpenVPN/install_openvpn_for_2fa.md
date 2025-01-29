@@ -124,7 +124,13 @@ remote-cert-tls server
 tail -f /var/log/mfa_openvpn.log
 ```
 ### Проверка аторизации
-
+#### Добавить в скрипт 
+```
+     echo "User: $user"
+     echo "Real Password: $realpass"
+     echo "MFA Token: $mfatoken"
+     echo "Generated TOTP Code: $code"
+```
 ```
 echo -e "n.bayov@example.com\n12345678:898137" > /tmp/test_passfile
 ./oath.sh /tmp/test_passfile
