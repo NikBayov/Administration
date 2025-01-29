@@ -124,7 +124,7 @@ remote-cert-tls server
 tail -f /var/log/mfa_openvpn.log
 ```
 ### Проверка аторизации
-#### Добавить в скрипт 
+#### Добавить в скрипт /etc/openvpn/oath.sh
 ```
      echo "User: $user"
      echo "Real Password: $realpass"
