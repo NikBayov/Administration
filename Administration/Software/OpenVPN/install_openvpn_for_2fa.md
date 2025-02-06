@@ -122,6 +122,11 @@ reneg-sec 43200 # ссесия держится 12 часов,потом вык�
 ваш /etc/openvpn/client-shared.key
 -----END PRIVATE KEY-----
 </key>
+<tls-crypt>
+-----BEGIN OpenVPN Static key V1-----
+ваш /etc/openvpn/tls-crypt.key
+-----END OpenVPN Static key V1-----
+</tls-crypt>
 ```
 ### Настройка iptables
 ```
