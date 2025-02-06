@@ -36,6 +36,10 @@ client-connect /etc/openvpn/scripts/client-connect.sh
 client-disconnect /etc/openvpn/scripts/client-disconnect.sh
 ```
 
+### Перезапускаем сервер 
+```
+systemctl restart openvpn@server
+```
 ### Логи записываются в формате:
 ```bash
 2025-02-05 15:35:58 - Client disconnected: n.bayov, VPN IP: 10.10.11.2
