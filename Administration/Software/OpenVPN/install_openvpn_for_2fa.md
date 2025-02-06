@@ -102,11 +102,11 @@ remote <your_external_ip_server> 1194
 dev tun
 proto udp4
 client
-verb 4
-keepalive 10 60
+verb 3
+keepalive 10 120
 persist-tun
 auth-user-pass
-remote-cert-tls server
+reneg-sec 43200 # ссесия держится 12 часов,потом выкинет
 <ca>
 -----BEGIN CERTIFICATE-----
 ваш /etc/openvpn/ca.crt
