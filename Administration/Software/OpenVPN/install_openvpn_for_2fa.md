@@ -34,6 +34,10 @@ cd easy-rsa-master/easyrsa3
 ```
 #### Генерируем файл с параметрами Диффи-Хеллмана (dh.pem):
 `./easyrsa gen-dh`
+#### Генерируем tls-сертификат
+```
+openvpn --genkey secret /etc/openvpn/tls-crypt.key
+```
 ### Переносим полученные сертификаты
 ```
 mv ./pki/dh.pem /etc/openvpn/dh1024.pem
@@ -90,6 +94,7 @@ echo 1 > /proc/sys/net/ipv4/ip_forward
 systemctl start openvpn@server
 systemctl status openvpn@server
 ```
+### Д 
 
 ### Создаём конфиг клиента 
 ```
@@ -118,7 +123,18 @@ remote-cert-tls server
 -----END PRIVATE KEY-----
 </key>
 ```
-
+### Настройка iptables
+```
+apt-get install iptables-persistent iptables # установка iptables
+iptables -I INPUT -p udp --dport 1194 -m state --state NEW -j ACCEPT # открытие порта 1194 udp для vpn-сервера
+```
+#### Использование NAT,если необходим
+```
+sudo iptables -t nat -A POSTROUTING -s 10.10.11.0/24 -d 172.17.0.0/16 -j SNAT --to-source 192.168.0.2
+# 192.168.0.2 -> ip vpn-server
+# 192.168.0.2 -> подсеть к которой нужен доступ
+# 10.10.11.0/24 -> виртуальная подсеть vpn сервера 
+```
 ### Режим отладки авторизации
 ```
 tail -f /var/log/mfa_openvpn.log
