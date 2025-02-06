@@ -94,8 +94,10 @@ echo 1 > /proc/sys/net/ipv4/ip_forward
 systemctl start openvpn@server
 systemctl status openvpn@server
 ```
-### Д 
-
+### Включаем ip-перенаправление на сервере
+```
+sysctl -w net.ipv4.ip_forward=1
+```
 ### Создаём конфиг клиента 
 ```
 remote <your_external_ip_server> 1194
