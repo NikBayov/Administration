@@ -1,7 +1,8 @@
 # Полезные команды для k8s
 
-###
+### Удалить namespace
 ```
+kubectl delete namespace <namespace_name>
 ```
 ###
 ```
