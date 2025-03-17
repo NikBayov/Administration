@@ -8,8 +8,9 @@ kubectl delete namespace <namespace_name>
 ```
 kubectl label pods POD_NAME version=v1
 ```
-###
+### Узнать кол-во реплик
 ```
+kubectl get rs
 ```
 ###
 ```
