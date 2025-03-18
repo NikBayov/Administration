@@ -24,8 +24,9 @@ kubectl config set-context --current --namespace=default
 ```
 kubectl logs deployments/configmap-volume --follow
 ```
-###
+### Проброс порта
 ```
+kubectl port-forward service/configmap-sidecar-service 8081:8081 &
 ```
 ###
 ```
