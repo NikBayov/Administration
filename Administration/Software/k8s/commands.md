@@ -20,8 +20,9 @@ kubectl config view --minify | grep namespace
 ```
 kubectl config set-context --current --namespace=default
 ```
-###
+### Смотреть логи в режиме RT
 ```
+kubectl logs deployments/configmap-volume --follow
 ```
 ###
 ```
