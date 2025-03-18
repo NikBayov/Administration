@@ -12,11 +12,13 @@ kubectl label pods POD_NAME version=v1
 ```
 kubectl get rs
 ```
-###
+### Проверить текущий namespace по умолчанию
 ```
+kubectl config view --minify | grep namespace
 ```
-###
+### Сменить namespace по умолчанию на default
 ```
+kubectl config set-context --current --namespace=default
 ```
 ###
 ```
