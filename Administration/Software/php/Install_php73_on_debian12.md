@@ -73,7 +73,7 @@ phpize
 ./configure --with-pdo-oci=instantclient,/usr/lib/oracle/19.6/client64/lib
 sudo make install
 ```
-#### Создаём файл и добавляем в него:
+#### Создаём файл /etc/php/7.3/mods-available/pdo_oci.ini и добавляем в него:
 ```/etc/php/7.3/mods-available/pdo_oci.ini
 extension=pdo_oci.so
 ```
