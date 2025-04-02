@@ -46,7 +46,7 @@ source ~/.bashrc
 ldd $ORACLE_HOME/lib/libclntsh.so
 ```
 ### Установка oci8 для php7.3(совместимые версии ищи в доке)
-```
+```bash
 wget https://pecl.php.net/get/oci8-2.2.0.tgz
 tar -xvzf oci8-2.2.0.tgz
 cd oci8-2.2.0
@@ -62,6 +62,23 @@ phpenmod oci8
 php -m | grep oci8
 ```
 ### Устанавливаем pdo_oci
+#### Клонируем репу php
 ```
-
+git clone --branch PHP-7.3.3 https://github.com/php/php-src.git
+```
+#### Устанавливаем pdo_oci
+```
+cd ./php-src/ext/pdo_oci
+phpize
+./configure --with-pdo-oci=instantclient,/usr/lib/oracle/19.6/client64/lib
+sudo make install
+```
+#### Создаём файл и добавляем в него:
+```/etc/php/7.3/mods-available/pdo_oci.ini
+extension=pdo_oci.so
+```
+#### Создаём симлинк
+```
+cd /etc/php/7.3/fpm/conf.d/
+ln -s /etc/php/7.3/mods-available/pdo_oci.ini 20-pdo_oci.ini
 ```
