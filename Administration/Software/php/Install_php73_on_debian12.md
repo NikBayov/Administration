@@ -74,11 +74,15 @@ phpize
 sudo make install
 ```
 #### Создаём файл /etc/php/7.3/mods-available/pdo_oci.ini и добавляем в него:
-```/etc/php/7.3/mods-available/pdo_oci.ini
+```
 extension=pdo_oci.so
 ```
 #### Создаём симлинк
 ```
 cd /etc/php/7.3/fpm/conf.d/
 ln -s /etc/php/7.3/mods-available/pdo_oci.ini 20-pdo_oci.ini
+```
+#### Перезапускаем php
+```
+systemctl restart php7.3-fpm
 ```
