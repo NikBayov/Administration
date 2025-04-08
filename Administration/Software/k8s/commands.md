@@ -30,6 +30,8 @@ kubectl port-forward service/configmap-sidecar-service 8081:8081 &
 ```
 ###
 ```
+kubectl patch svc ingress-nginx-controller -n ingress-nginx \
+  -p '{"spec": {"externalIPs": ["172.17.29.31"]}}'
 ```
 ###
 ```
