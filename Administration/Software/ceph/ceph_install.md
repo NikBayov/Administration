@@ -8,6 +8,12 @@
 ```
 apt install gpg curl chrony sudo
 ```
+### Прописываем хосты на всех вм
+```
+192.168.0.110 ceph1
+192.168.0.111 ceph2
+192.168.0.112 ceph3
+```
 ### на всех вм 
 ```
 apt-cache policy cephadm
@@ -59,11 +65,11 @@ ceph orch host label add ceph2 osd
 
 ceph orch host label add ceph3 osd
 ```
-### Включение mds:
+### Включение mds(ceph1):
 ```
 ceph orch apply mds cephfs --placement="3 ceph1 ceph2 ceph3"
 ```
-### Включение и проверка имеющихся разделов диска в osd:
+### Включение и проверка имеющихся разделов диска в osd(ceph1):
 ```
 ceph orch apply osd --all-available-devices --method lvm
 ceph orch device ls
