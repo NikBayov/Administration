@@ -35,6 +35,36 @@ apt install cephadm
 ```
 cephadm bootstrap --mon-ip 192.168.0.110
 ```
-### 
+### Открываем веб-интерфейс
 #### В выводе команды получаем логин и пароль  для первого входа и смены пароля
 `Адрес для входа: https://172.17.28.41:8443`
+### Установка Ceph CLI (на всех ВМ)
+```
+apt install ceph-common
+```
+### Добавляем ключ /etc/ceph/ceph.pub с ceph1 на ceph2,ceph3
+### Инициализация ВМ в кластере(ceph1):
+```
+ceph orch host add ceph2
+
+ceph orch host add ceph3
+
+Лейблы:
+
+ceph orch host label add ceph2 mon
+
+ceph orch host label add ceph3 mon
+
+ceph orch host label add ceph2 osd
+
+ceph orch host label add ceph3 osd
+```
+### Включение mds:
+```
+ceph orch apply mds cephfs --placement="3 ceph1 ceph2 ceph3"
+```
+### Включение и проверка имеющихся разделов диска в osd:
+```
+ceph orch apply osd --all-available-devices --method lvm
+ceph orch device ls
+```
