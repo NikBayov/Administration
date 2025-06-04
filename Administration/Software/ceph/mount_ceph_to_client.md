@@ -1,4 +1,6 @@
 # Монтирование ceph к клиентскому хосту
+
+## Копируем конфиги и ключи с кластера ceph
 #### `ceph1@root`
 ```
 scp -r /etc/ceph/* client_host:/etc/ceph/
