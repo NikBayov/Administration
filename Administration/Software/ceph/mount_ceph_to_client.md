@@ -11,3 +11,8 @@ apt install ceph-fuse
 
 ceph-fuse -m ceph1_ip:6789 /mnt/cephfs --id admin  -d --no-mon-config
 ```
+
+### Проверяем примонтировался ли volume
+```
+ls -la /mnt/cephfs
+```
