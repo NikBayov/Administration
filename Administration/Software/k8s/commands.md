@@ -33,14 +33,17 @@ kubectl port-forward service/configmap-sidecar-service 8081:8081 &
 kubectl patch svc ingress-nginx-controller -n ingress-nginx \
   -p '{"spec": {"externalIPs": ["172.17.29.31"]}}'
 ```
-###
+### Посмотреть деплои в namespace cephfs
 ```
+kubectl get deploy -n cephfs
 ```
-###
+### Изменить деплой ceph-csi-cephfs-provisioner
 ```
+kubectl edit deploy -n cephfs ceph-csi-cephfs-provisioner
 ```
-###
+### Посмотреть ingress в namespace monitoring 
 ```
+kubectl get ingress -n monitoring
 ```
 ###
 ```
