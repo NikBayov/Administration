@@ -74,3 +74,19 @@ ceph orch apply mds cephfs --placement="3 ceph1 ceph2 ceph3"
 ceph orch apply osd --all-available-devices --method lvm
 ceph orch device ls
 ```
+
+
+### Создание пулов и файловой системы на примере, для k8s:
+
+```
+ceph osd pool create kube_data
+ceph osd pool create kube_metadata
+ceph fs new cephfs kube_metadata kube_data
+```
+
+### Для корректного подключения к кластеру k8s в режиме cephfs-csi также необходимо создать subvolumegroup:
+
+```
+ceph fs subvolumegroup create cephfs csi
+ceph fs subvolumegroup ls cephfs
+```
