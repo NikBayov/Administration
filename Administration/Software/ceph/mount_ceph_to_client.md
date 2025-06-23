@@ -11,7 +11,11 @@ apt install ceph-fuse
 
 ceph-fuse -m ceph1_ip:6789 /mnt/cephfs --id admin  -d --no-mon-config
 ```
-
+### ИЛИ
+```
+apt install ceph-common
+mount -t ceph :/pg1 /mnt/pgdata -o name=admin,fs=cephfs-db
+```
 ### Проверяем примонтировался ли volume
 ```
 ls -la /mnt/cephfs
