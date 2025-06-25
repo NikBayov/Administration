@@ -45,8 +45,9 @@ kubectl edit deploy -n cephfs ceph-csi-cephfs-provisioner
 ```
 kubectl get ingress -n monitoring
 ```
-###
+### Задание роли(worker) node(k8s-wn3)
 ```
+kubectl label node k8s-wn3 node-role.kubernetes.io/worker=worker
 ```
 ###
 ```
