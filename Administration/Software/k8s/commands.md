@@ -53,8 +53,21 @@ kubectl label node k8s-wn3 node-role.kubernetes.io/worker=worker
 ```
 kubectl get pods --all-namespaces -o wide --field-selector spec.nodeName=k8s-mn1
 ```
-###
+### Чтоб разрешить запуск только на worker
 ```
+spec:
+  template:
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: node-role.kubernetes.io/worker
+                operator: Exists
+      tolerations: 
+        - key: node-role.kubernetes.io/worker
+          operator: Exists
 ```
 ### 
 ```
