@@ -69,8 +69,9 @@ spec:
         - key: node-role.kubernetes.io/worker
           operator: Exists
 ```
-### 
+### Запретить создание новых подов на k8s-mn1
 ```
+kubectl cordon k8s-mn1
 ```
 ###
 ```
