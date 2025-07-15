@@ -14,7 +14,8 @@
     {
       "type": "composer",
       "url": "https://asset-packagist.org"
-    }	
+    }
+...
 ```
 ### Далее добавляем содержимое satis.json в configmap.yaml
 
