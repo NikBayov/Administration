@@ -34,3 +34,4 @@ kubectl apply -f service.yaml -n satis
 kubectl create job --from=cronjob/satis-build satis-manual-$(date +%s) -n satis
 ```
 ### Заходим на домен и проверяем, что локальный реп готов
+![screenshot](/cache/picture/satis.png)
