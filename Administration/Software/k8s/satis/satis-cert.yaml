@@ -1,0 +1,15 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: satis-tls
+  namespace: satis
+spec:
+  secretName: satis-tls
+  dnsNames:
+  - satis.nikbayov.ru
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  usages:
+  - digital signature
+  - key encipherment

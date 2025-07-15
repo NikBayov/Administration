@@ -1,0 +1,3 @@
+FROM composer/satis
+COPY satis.json /build/satis.json
+RUN satis build /build/satis.json /build/output

@@ -1,0 +1,30 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: satis-build
+  namespace: satis
+spec:
+  schedule: "0 0 31 2 *"
+  jobTemplate:
+    spec:
+      backoffLimit: 1
+      template:
+        spec:
+          containers:
+          - name: satis
+            image: composer/satis
+            args: ["build", "/satis/satis.json", "/satis/output"]
+            volumeMounts:
+            - name: config
+              mountPath: /satis/satis.json
+              subPath: satis.json
+            - name: output
+              mountPath: /satis/output
+          restartPolicy: Never
+          volumes:
+          - name: config
+            configMap:
+              name: satis-config
+          - name: output
+            persistentVolumeClaim:
+              claimName: satis-output-pvc

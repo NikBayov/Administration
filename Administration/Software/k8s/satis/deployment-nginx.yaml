@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: satis-nginx
+  namespace: satis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: satis-nginx
+  template:
+    metadata:
+      labels:
+        app: satis-nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:alpine
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: output
+          mountPath: /usr/share/nginx/html
+      volumes:
+      - name: output
+        persistentVolumeClaim:
+          claimName: satis-output-pvc

@@ -1,0 +1,72 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: satis-config
+  namespace: satis
+data:
+  satis.json: |
+    {
+      "name": "nikbayov/satis-repo",
+      "homepage": "https://satis.nikbayov.ru",
+      "repositories": [
+        {
+          "type": "composer",
+          "url": "https://packagist.org"
+        },
+        {
+          "type": "composer",
+          "url": "https://asset-packagist.org"
+        }	
+      ],
+      "minimum-stability": "dev",
+      "require": {
+        "php": "^7.1.11",
+        "yiisoft/yii2": "*",
+        "yiisoft/yii2-bootstrap": "~2.0.0",
+        "yiisoft/yii2-redis": "*",
+        "vlucas/phpdotenv": "2.5",
+        "nex/yii2-graylog2": "dev-master@dev",
+        "nesbot/carbon": "2.3.0",
+        "phpmailer/phpmailer": "~6.8",
+        "kartik-v/yii2-widget-select2": "@dev",
+        "kartik-v/yii2-widget-datepicker": "~1.4.2",
+        "kartik-v/yii2-widget-datetimepicker": "~1.4.4",
+        "kartik-v/yii2-widgets": "~3.4.0",
+        "zlakomanov/yii2-oracle-pack": ">=1.1.1",
+        "la-haute-societe/yii2-save-relations-behavior": "^1.1",
+        "ext-pdo": "*",
+        "la-haute-societe/yii2-save-relations-behavior": "^1.1",
+        "kartik-v/yii2-date-range": "dev-feature/addingButtonErase",
+        "kartik-v/yii2-export": "^1.4",
+        "mihaildev/yii2-ckeditor": "^1.0",
+        "shuchkin/simplexlsx": "^1.0",
+        "edvlerblog/yii2-adldap-module": "^6.0",
+        "yiisoft/yii2-debug": "~2.0.0",
+        "yiisoft/yii2-gii": "~2.0.0",
+        "yiisoft/yii2-faker": "~2.0.0"
+      },
+      "config": {
+        "process-timeout": 1800,
+        "secure-http": false,
+        "fxp-asset": {
+          "enabled": false
+        },
+        "discard-changes": true,
+        "platform": {
+          "php": "7.1.11"
+        },
+        "allow-plugins": {
+          "yiisoft/yii2-composer": true
+        }
+      },
+      "require-dependencies": true,
+      "require-dev-dependencies": true,
+      "archive": {
+        "directory": "dist",
+        "format": "zip",
+        "skip-dev": false
+      }
+    }
+
+
+
