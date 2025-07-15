@@ -30,7 +30,7 @@ kubectl apply -f tls.yaml -n satis
 kubectl apply -f service.yaml -n satis
 ```
 ### Далее запустится cronjob и скачает все пакеты на pvc
-##### я сделал cronjob мануально, чтобы перезапустить job
+##### я сделал cronjob мануально, чтобы вновь запустить job необходимо
 ```
 kubectl create job --from=cronjob/satis-build satis-manual-$(date +%s) -n satis
 ```
