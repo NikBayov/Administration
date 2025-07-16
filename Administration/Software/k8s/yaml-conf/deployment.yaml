@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  replicas: 3   # <-- Указывает, сколько копий Pod должно работать одновременно.
+  selector: # <-- Определяет, какие Pod управляются этим Deployment. Должен соответствовать labels в Pod.
+    matchLabels: # <-- простой выбор по label.
+      app: nginx
+  strategy: # <-- Определяет, как Deployment будет обновлять Pod при изменении конфигурации.
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  minReadySeconds: 10 # <-- Определяет, сколько секунд Pod должен работать без сбоев, прежде чем будет считаться "готовым".
+  revisionHistoryLimit: 5 # <--  Сколько старых ReplicaSet хранить для возможного отката. По умолчанию
+  progressDeadlineSeconds: # <-- Через сколько секунд обновление считается "зависшим", если Pod не переходят в готовое состояние.
+  template: # <--  Шаблон для создания Pod. Содержит всю спецификацию Pod (spec), которую использует pod
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.25
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
+            cpu: "200m"
+            memory: "256Mi"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 10
+      nodeSelector:
+        env: production
+      tolerations:
+      - key: "special"
+        operator: "Exists"
