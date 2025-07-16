@@ -1,0 +1,33 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: nightly-backup
+spec:
+  schedule: "0 2 * * *"         # Формат расписания в cron-формате
+  timeZone: "Europe/Moscow"     # Часовой пояс (K8s 1.25+)
+  concurrencyPolicy: Forbid     # Запретить параллельные Job( если предыдущая Job ещё работает, новая не создаётся.)
+  successfulJobsHistoryLimit: 3 # Сколько успешных и неудачных Job хранить в истории
+  failedJobsHistoryLimit: 1
+  startingDeadlineSeconds: 600  # Пропустить, если не запустилась за 10 минут # Максимальное время (в секундах), на которое CronJob может опоздать с запуском. Если Job не создана в этот срок — пропускается.
+  jobTemplate: # <-- Определяет, какую Job создавать при срабатывании расписания. Использует те же поля, что и обычная Job
+    spec:
+      backoffLimit: 2
+      template:
+        spec:
+          containers:
+          - name: backup
+            image: postgres:14
+            command: ["sh", "-c", "pg_dump -U $DB_USER $DB_NAME > /backups/db_$(date +%F).sql"]
+            env:
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: db-creds
+                  key: username
+            - name: DB_NAME
+              value: "app_db"
+          restartPolicy: OnFailure
+          volumes:
+          - name: backup-storage
+            persistentVolumeClaim:
+              claimName: backup-pvc
