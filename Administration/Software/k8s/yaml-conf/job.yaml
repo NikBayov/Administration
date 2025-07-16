@@ -1,0 +1,24 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: data-processing
+spec:
+  completions: 3 # <-- Job создаст 3 Pod последовательно
+  parallelism: 2 # <-- Сколько Pod могут работать одновременно
+  backoffLimit: 2 # <-- Сколько раз Job будет перезапускать Pod при ошибках
+  activeDeadlineSeconds: 600 # <-- Максимальное время работы Job в секундах. Если задача не завершилась — Job принудительно останавливается.
+  ttlSecondsAfterFinished: 86400  # <-- Через сколько секунд после завершения Job удалить её ресурсы
+  completionMode: Indexed #каждый Pod получает уникальный индекс # <-- режим завершения
+  template: # <-- Основной блок, определяющий Pod, который будет запущен для выполнения задачи.
+    spec:
+      containers:
+      - name: worker
+        image: python:3.9
+        command: ["python", "process.py"] # Скрипт должен завершиться
+        resources:
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
+      restartPolicy: OnFailure # Или Never
+      nodeSelector:
+        node-type: worker
