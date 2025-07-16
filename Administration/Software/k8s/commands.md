@@ -73,8 +73,9 @@ spec:
 ```
 kubectl cordon k8s-mn1
 ```
-###
+### Перезаписать текущую конфигурацию
 ```
+kubectl replace -f nginx.yaml
 ```
 ### 
 ```
