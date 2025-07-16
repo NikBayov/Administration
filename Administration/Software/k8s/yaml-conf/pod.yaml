@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-pod
+  labels:
+    app: test
+    tier: dev
+spec:
+  containers: # <-- (обязательно) — список контейнеров в Pod.
+  - name: nginx-container
+    image: nginx
+    ports:
+    - containerPort: 80
+  initContainers: # <-- контейнеры, запускаемые до основных.
+  restartPolicy: # Always, OnFailure, Never # <-- политика перезапуска.
+  volumes: # <-- общие тома для контейнеров
+  nodeSelector: # <--  выбор узла по меткам.
+  affinity/anti-affinity: # <-- правила размещения Pod.
+  tolerations: # <--  разрешение запуска на tainted-нодах.
+  securityContext: # <-- настройки безопасности для Pod.
+  imagePullSecrets: # <-- секреты для доступа к образам.
+  hostNetwork, hostPID, hostIPC: # <-- доступ к ресурсам хоста.
+  dnsConfig: # <-- кастомные настройки DNS.
+  command: ["sleep"]  # <-- переопределение команды запуска
+  args: ["3600"] # <-- переопределение команды запуска
+  env: # <-- переменные окружения.
+    - name: DB_HOST
+      value: "postgres"
+    - name: DB_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: db-secret
+          key: password#  
+  resources # <--   ограничения CPU и памяти.
+  requests:
+    cpu: "100m" 
+    memory: "128Mi"
+  limits:
+    cpu: "500m"  
+    memory: "512Mi"
+  volumeMounts: # <-- подключение томов внутрь контейнера.
+    - name: data-volume
+      mountPath: /data
+  livenessProbe/readinessProbe: # <-- проверки здоровья
