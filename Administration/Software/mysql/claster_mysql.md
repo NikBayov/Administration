@@ -53,7 +53,7 @@ sudo mysql mydb < /tmp/mydb.sql
 ```
 server-id           = 2
 log_bin             = /var/log/mysql/mysql-bin.log 
-binlog_do_db        = wfm 
+binlog_do_db        = mydb 
 relay-log           = /var/log/mysql/mysql-relay-bin.log
 bind-address            = 0.0.0.0
 ```
