@@ -119,3 +119,73 @@ kubectl get secret awx-admin-password -o go-template='{{range $k,$v := .data}}{{
 ```
 ### AWX Установлен
 ![screenshot](/cache/picture/awx.png)
+
+
+## Настройка ingress и ssl
+
+### Меняем значение в сервисе с nodeport на ClusterIP
+```
+kubectl edit service awx-service -n awx
+```
+### В конфиге awx тоже с nodeport на ClusterIP
+```
+kubectl edit awx awx -n awx
+```
+
+### Пересоздаём сервис
+```
+kubectl delete service awx-service -n awx
+```
+
+### Создаём awx-nginx-ingress.yaml
+
+```
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: awx-ingress
+  namespace: awx
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"  
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - awx.nikbayov.ru
+    secretName: awx-tls
+  rules:
+  - host: awx.nikbayov.ru
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: awx-service  
+            port:
+              number: 80
+```
+### Создаём awx-cert.yaml
+```
+kind: Certificate
+metadata:
+  name: awx-tls
+  namespace: awx
+spec:
+  secretName: awx-tls
+  dnsNames:
+  - awx.nikbayov.ru
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  usages:
+  - digital signature
+  - key encipherment
+```
+
+### Применяем конфиги
+```
+kubectl apply -f awx-cert.yaml
+kubectl apply -f  awx-nginx-ingress.yaml
+```
