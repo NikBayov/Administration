@@ -118,3 +118,4 @@ awx-service                                       NodePort    10.109.184.112   <
 kubectl get secret awx-admin-password -o go-template='{{range $k,$v := .data}}{{printf "%s: " $k}}{{if not $v}}{{$v}}{{else}}{{$v | base64decode}}{{end}}{{"\n"}}{{end}}'
 ```
 ### AWX Установлен
+![screenshot](/cache/picture/awx.png)
