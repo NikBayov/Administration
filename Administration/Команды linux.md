@@ -45,3 +45,16 @@
 -p - сохранять владельца, временные метки и флаги доступа при копирование
 
 cp (файл копирования) (место копирования)
+
+
+`systemctl list-units --type service --all`   — просмотр всех юнитов в системе
+`systemctl start name`                        — запустить сервис
+`systemctl stop name`                         — остановить сервис
+`systemctl restart name`                      — перезапустить сервис
+`systemctl status name`                       — посмотреть статус сервиса
+`systemctl reload name `                      — перечитать конфигурацию
+`systemctl daemon-reload`                     — перечитать конфигурацию для всех
+`systemctl try-restart name`                  — перезапустить, если запущен
+`systemctl enable name`                       — включить автозапуск сервиса
+`systemctl disable name`                      — отключить автозапуск сервиса
+`systemctl list-unit-files --type service`    — список установленных юнит-файлов сервисов
