@@ -96,3 +96,8 @@ kubectl delete pod -n kube-system helm-install-traefik-crd-x85rw
 kubectl delete pod -n kube-system helm-install-traefik-kctkr
 ```
 ### Устанавливаем ingress
+```
+helm repo update
+helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+helm install ingress-nginx ingress-nginx/ingress-nginx   --namespace ingress-nginx   --create-namespace
+```
