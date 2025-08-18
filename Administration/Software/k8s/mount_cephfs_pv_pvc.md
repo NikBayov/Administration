@@ -88,7 +88,7 @@ kubectl apply -f Storageclass.yaml -n cephfs
 kubectl apply -f ceph-configmap.yaml -n cephfs
 ```
 
-### Создаём pvc.yaml для теста
+### Создаём pv.yaml для теста
 
 ```
 apiVersion: v1
