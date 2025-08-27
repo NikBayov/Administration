@@ -62,4 +62,4 @@ cp (файл копирования) (место копирования)
 
 `getfacl` -Для просмотра дополнительных разрешений
 
-`systemctl list-unit --type=service` - просмотр всех сервисов
+`systemctl list-units --type=service` - просмотр всех сервисов
