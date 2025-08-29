@@ -26,7 +26,7 @@ curl -sfL https://get.k3s.io | sh -s - \
   --flannel-backend=none \
   --disable-network-policy \
   --disable local-storage \
-  --disable traefik \
+  --disable traefik 
 ```
 ### Устанавливаем calico на mn1
 
