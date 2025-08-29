@@ -22,7 +22,11 @@ sysctl -p /etc/sysctl.conf
 ### Устанавливаем k3s на mn1 
 
 ```
-curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--flannel-backend=none --disable-network-policy" sh -s -
+curl -sfL https://get.k3s.io | sh -s - \
+  --flannel-backend=none \
+  --disable-network-policy \
+  --disable local-storage \
+  --disable traefik \
 ```
 ### Устанавливаем calico на mn1
 
