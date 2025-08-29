@@ -65,40 +65,6 @@ kubectl apply -f custom-resources.yaml
 ```
 kubectl get pods -o wide --all-namespaces
 ```
-
-### Удалёем traefik
-```
-kubectl delete -n kube-system deployment traefik
-kubectl delete -n kube-system service traefik
-kubectl delete clusterrole traefik
-kubectl delete clusterrolebinding traefik
-kubectl delete -n kube-system serviceaccount traefik
-kubectl delete crd aiservices.hub.traefik.io
-kubectl delete crd apiaccesses.hub.traefik.io
-kubectl delete crd apibundles.hub.traefik.io
-kubectl delete crd apicatalogitems.hub.traefik.io
-kubectl delete crd apiplans.hub.traefik.io
-kubectl delete crd apiportals.hub.traefik.io
-kubectl delete crd apiratelimits.hub.traefik.io
-kubectl delete crd apis.hub.traefik.io
-kubectl delete crd apiversions.hub.traefik.io
-kubectl delete crd ingressroutes.traefik.io
-kubectl delete crd ingressroutetcps.traefik.io
-kubectl delete crd ingressrouteudps.traefik.io
-kubectl delete crd managedsubscriptions.hub.traefik.io
-kubectl delete crd middlewares.traefik.io
-kubectl delete crd middlewaretcps.traefik.io
-kubectl delete crd serverstransports.traefik.io
-kubectl delete crd serverstransporttcps.traefik.io
-kubectl delete crd tlsoptions.traefik.io
-kubectl delete crd tlsstores.traefik.io
-kubectl delete crd traefikservices.traefik.io
-
-```
-```
-kubectl delete pod -n kube-system helm-install-traefik-crd-x85rw
-kubectl delete pod -n kube-system helm-install-traefik-kctkr
-```
 ### Устанавливаем ingress
 ```
 helm repo update
