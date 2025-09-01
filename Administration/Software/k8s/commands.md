@@ -77,11 +77,13 @@ kubectl cordon k8s-mn1
 ```
 kubectl replace -f nginx.yaml
 ```
-### 
+### Удалить pvc принудительно
 ```
+kubectl patch pvc test-app -p '{"metadata":{"finalizers":null}}'
 ```
-###
+### Удалить pv принудительно
 ```
+kubectl patch pv test-app --type=merge -p '{"metadata":{"finalizers":[]}}'
 ```
 ### 
 ```
