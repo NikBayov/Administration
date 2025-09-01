@@ -146,7 +146,7 @@ spec:
 ```
 
 ```
-kubectl apply -f pvc.yaml -n cephfs
+kubectl apply -f pvc.yaml
 ```
 
 ### Создаём тестовый под tpod.yaml
