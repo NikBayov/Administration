@@ -85,11 +85,13 @@ kubectl patch pvc test-app -p '{"metadata":{"finalizers":null}}'
 ```
 kubectl patch pv test-app --type=merge -p '{"metadata":{"finalizers":[]}}'
 ```
-### 
+### Убрать метку(default) с sc
 ```
+kubectl patch storageclass <default-storageclass> -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"false"}}}'
 ```
-###
+### Добавить метку(default) для sc
 ```
+kubectl patch storageclass cephfs-k3s -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
 ```
 ### 
 ```
