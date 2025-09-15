@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: satis-nginx
+  namespace: satis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: satis-nginx
+  template:
+    metadata:
+      labels:
+        app: satis-nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:alpine
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: output
+          mountPath: /usr/share/nginx/html
+        - name: nginx-config
+          mountPath: /etc/nginx/conf.d  # Монтируем всю директорию
+      volumes:
+      - name: output
+        persistentVolumeClaim:
+          claimName: satis-output-pvc
+      - name: nginx-config
+        configMap:
+          name: nginx-config
+          items:
+          - key: nginx.conf
+            path: default.conf
