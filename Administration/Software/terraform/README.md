@@ -14,7 +14,7 @@ usert@server:~# terraform version
 Terraform v1.13.2
 on linux_amd64
 ```
-### В корневой папке пользователя создаём файл .terraformrc с содержимым\
+### В корневой папке пользователя создаём файл .terraformrc с содержимым:
 ```
 provider_installation {
   network_mirror {
