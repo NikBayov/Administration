@@ -11,24 +11,24 @@
 ### После установки ОС ввести:
 
 ```
-$ dnf clean all && dnf update -y && dnf install curl wget -y
+dnf clean all && dnf update -y && dnf install curl wget -y
 ```
 ```
-$ wget http://repo.bitrix.info/dnf/bitrix-env-9.sh && chmod +x bitrix-env-9.sh && ./bitrix-env-9.sh -s -p -H server1 -P -M 'Ie8HH2_8HO'
+wget http://repo.bitrix.info/dnf/bitrix-env-9.sh && chmod +x bitrix-env-9.sh && ./bitrix-env-9.sh -s -p -H server1 -P -M 'Ie8HH2_8HO'
 ```
 
 ### Предложет выключить SeLinux вводим 'y' и после перезагружаем
 
 ``` 
-$ reboot -h now
+reboot -h now
 ```
 ```
-$ ./bitrix-env-9.sh -s -p -H server1 -P -M 'Ie8HH2_8HO'
+./bitrix-env-9.sh -s -p -H server1 -P -M 'Ie8HH2_8HO'
 ```
 ### Загружаем файл bitrixsetup.php в /home/bitrix/www и выдаём права
 
 ```
-$ chown -R bitrix:bitrix /home/bitrix/www
+chown -R bitrix:bitrix /home/bitrix/www
 ```
 ### После открываем Web-страницу http://your.ip.address/bitrixsetup.php  и настраиваем
 
