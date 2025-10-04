@@ -11,7 +11,7 @@
 ### После установки ОС ввести:
 
 ```
-$ dnf clean all && dnf update -y && dnf install curl -y
+$ dnf clean all && dnf update -y && dnf install curl wget -y
 ```
 ```
 $ wget http://repo.bitrix.info/dnf/bitrix-env-9.sh && chmod +x bitrix-env-9.sh && ./bitrix-env-9.sh -s -p -H server1 -P -M 'Ie8HH2_8HO'
