@@ -1,0 +1,1 @@
+# Установка vault в kubernetes
