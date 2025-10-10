@@ -10,7 +10,7 @@ helm pull oci://cr.yandex/yc-marketplace/yandex-cloud/vault/chart/vault \
 ```
 kubectl create ns vault
 ```
-### Редакдируем values.yaml под наши запросы(пример оставил в example-values.yaml)
+### Редакдируем values.yaml под наши запросы(пример оставил в `example-values.yaml`)
 
 ### Устанавливаем чарт
 ```
