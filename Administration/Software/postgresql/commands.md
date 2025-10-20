@@ -3,24 +3,28 @@
 ```
 ```
 
-###
+### Пожключиться к бд под пользователм postgres
 
 ```
+sudo -u postgres psql
 ```
 
-###
+### Удалённое подключение к бд
 
 ```
+psql -h [ip_db] -U [user] -d [database]
 ```
 
-###
+### Создание пользователя (superuser)
 
 ```
+CREATE USER [user] WITH PASSWORD 'passwd' SUPERUSER;
 ```
 
-###
+### Проверка пользователя
 
 ```
+\du user
 ```
 
 ###
