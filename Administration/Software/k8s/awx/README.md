@@ -189,3 +189,48 @@ spec:
 kubectl apply -f awx-cert.yaml
 kubectl apply -f  awx-nginx-ingress.yaml
 ```
+
+## Если нужна внешняя БД меняем конфиг на:
+```awx-cr.yaml 
+apiVersion: awx.ansible.com/v1beta1
+kind: AWX
+metadata:
+  name: awx
+  namespace: awx
+spec:
+  service_type: nodeport
+  nodeport_port: 32000
+  projects_persistence: true
+  # projects_storage_access_mode: ReadWriteOnce
+  web_extra_volume_mounts: |
+    - name: static-data
+      mountPath: /var/lib/projects
+  extra_volumes: |
+    - name: static-data
+      persistentVolumeClaim:
+        claimName:  awx-static-data-pvc
+  postgres_configuration_secret: awx-postgres-configuration
+```
+
+### Также создаём секрет PG
+```pg-secret.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: awx-postgres-configuration
+  namespace: awx
+stringData:
+  host: "ip-db-pg"
+  port: "5432"  # Обязательно в кавычках!
+  database: "awx"
+  username: "awx"
+  password: "awx123"
+  sslmode: "prefer"
+  type: "unmanaged"
+type: Opaque
+```
+### Применяем изменения
+```
+kubectl apply -f pg-secret.yaml
+kubectl apply -f awx-cr.yaml
+```
