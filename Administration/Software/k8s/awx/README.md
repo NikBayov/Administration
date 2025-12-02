@@ -83,7 +83,7 @@ kubectl get pods -l "app.kubernetes.io/managed-by=awx-operator" -w
 
 `Необходимо выдать права в pvc на корневую папку рекусивно`
 ```
-chown 26:root /mnt/ceph/volumes/csi/csi-vol-29685f1b-4046-43a2-8cf8-65ee1c1d74c4
+chown -R 26:root /mnt/ceph/volumes/csi/csi-vol-29685f1b-4046-43a2-8cf8-65ee1c1d74c4
 ```
 
 ### Проверяем логи
