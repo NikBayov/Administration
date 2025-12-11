@@ -9,4 +9,6 @@ kubectl apply -f ingress-webohook.yaml
 
 ### После заходим в awx `Notifications->add` и настраиваем:
 
-![screenshot](/cache/picture/awx-notice.jpg)
+![screenshot](/cache/picture/awx-notice.png)
+
+### Сохраняем и нажимаем кнопку `test`
