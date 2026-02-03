@@ -1,6 +1,6 @@
 # Ошибки и пути к файлам для их исправления
 
-`/dev/mapper/debian12--ug-root: UNEXPECTED INCONSISTENCY:` --> [filesystem_crush.md](Administration/Administration/Problems/filesystem_crush.md)
+`/dev/mapper/debian12--ug-root: UNEXPECTED INCONSISTENCY:` --> [filesystem_crush.md](./filesystem_crush.md)
 
 `Received disconnect from 172.17.200.63 port 38478:11: PECL/ssh2 (http://pecl.php.net/packages/ssh2) [preauth]` --> php_ssh2_connect.md 
 
