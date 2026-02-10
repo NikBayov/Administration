@@ -2,25 +2,25 @@
 ### Проверка версии debian
 
 ```
-$ cat /etc/debian_version
+cat /etc/debian_version
 ```
 
 ### Чтобы обновить дистрибутив Debian, а заодно привести пакеты в порядок, выполните команды:
 
 ```
-$ sudo apt update
+sudo apt update
 
-$ sudo apt dist-upgrade
+sudo apt dist-upgrade
 
-$ sudo apt --fix-broken install
+sudo apt --fix-broken install
 
-$ sudo apt autoremove
+sudo apt autoremove
 ```
 
 ### Заменяем репозитории
 
 ```
-$ sudo nano /etc/apt/sources.list
+sudo nano /etc/apt/sources.list
 ```
 #### Для Debian 11
 ```
@@ -49,13 +49,13 @@ deb-src http://security.debian.org/ bookworm-security main
 ### Обновляем репозитории
 
 ```
-$ sudo apt update
+sudo apt update
 ```
 
 ### Сначала меняем репозитории debian 10 на debian 11 и обновляем, после повторяет тоже для debian 12
 
 ```
-$ sudo apt upgrade --without-new-pkgs
+sudo apt upgrade --without-new-pkgs
 ```
 
 ### Обновление завершено
