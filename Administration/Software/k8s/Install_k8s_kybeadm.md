@@ -1,4 +1,4 @@
-# Установка k8s v.1.31 через kubeadm на Debian 12.7, 1  master node and 2 worker node
+# Установка k8s v.1.32 через kubeadm на Debian 12.7, 1  master node and 2 worker node
 
 ## Примечание: Все шаги со знаком `*` выполняются для всех node
 
@@ -155,4 +155,5 @@ sudo rm -f /etc/kubernetes/pki/ca.crt
 
 #### Посмотреть события кластера
 `kubectl get events`
+
 
