@@ -70,7 +70,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: {{username}}
-    namespace: myapp-prod
+    namespace: {{namespace}}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
