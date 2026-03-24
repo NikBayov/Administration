@@ -1,6 +1,6 @@
-# Настройка деплоя через helm в k8s-кластер
+# Настройка деплоя app(php+nginx) через helm в k8s-кластер
 
-### Создаём отдельный namespace и ServiceAccount:
+### 1.Создаём отдельный namespace и ServiceAccount:
 ```
 apiVersion: v1
 kind: ServiceAccount
@@ -11,7 +11,7 @@ metadata:
 ```
 kubectl apply -f serviceaccount.yaml
 ```
-### Создаём Role + RoleBinding
+### 2.Создаём Role + RoleBinding
 ```
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
@@ -79,4 +79,34 @@ roleRef:
 ```
 kubectl apply -f role.yaml
 kubectl apply -f rolebinding.yaml
+```
+### 3.Получаем токен ServiceAccount
+
+```
+kubectl -n {{namespace}} create token {{username}}
+```
+### 4.Собираем kubeconfig
+
+```
+apiVersion: v1
+kind: Config
+clusters:
+- name: your-cluster
+  cluster:
+    server: https://YOUR-K8S-API:6443
+    certificate-authority-data: YOUR_BASE64_CA_DATA
+
+users:
+- name: {{username}}
+  user:
+    token: YOUR_SERVICEACCOUNT_TOKEN
+
+contexts:
+- name: {{username}}@your-cluster
+  context:
+    cluster: your-cluster
+    user: {{username}}
+    namespace: {{namespace}}
+
+current-context: {{username}}@your-cluster
 ```
