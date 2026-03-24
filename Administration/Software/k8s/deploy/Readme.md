@@ -11,7 +11,7 @@ metadata:
 ```
 kubectl apply -f serviceaccount.yaml
 ```
-### 2.Создаём Role + RoleBinding
+### 2.Создаём Role + RoleBinding(Если SA надо разделять по ns),если подходит скипаем пункты 2.x
 ```
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
@@ -80,6 +80,40 @@ roleRef:
 kubectl apply -f role.yaml
 kubectl apply -f rolebinding.yaml
 ```
+### 2.1 Создание ClusteRole + RoleBinding(если один SA на разные ns)
+```
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{username}}
+rules:
+  - apiGroups: [""]
+    resources: ["configmaps", "secrets", "services", "serviceaccounts", "pods"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: ["apps"]
+    resources: ["deployments", "statefulsets", "daemonsets", "replicasets"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+
+```
+
+### 2.2  Создаём в каждом нужном нам ns
+
+```
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{username}}-binding
+  namespace: {{namespace-2}}
+subjects:
+  - kind: ServiceAccount
+    name: {{username}}
+    namespace: {{namespace-1}}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{username}}
+```
+
 ### 3.Получаем токен ServiceAccount
 
 ```
