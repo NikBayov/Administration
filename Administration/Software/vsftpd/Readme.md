@@ -95,8 +95,11 @@ sudo cp /lib/systemd/system/vsftpd.service /etc/systemd/system/vsftpd-internal.s
 ```
 ### меняем строку с 
 /etc/systemd/system/vsftpd-external.service
+
 `ExecStart=/usr/sbin/vsftpd /etc/vsftpd.conf` --> `ExecStart=/usr/sbin/vsftpd /etc/vsftpd-external.conf`
+
 /etc/systemd/system/vsftpd-internal.service
+
 `ExecStart=/usr/sbin/vsftpd /etc/vsftpd.conf` --> `ExecStart=/usr/sbin/vsftpd /etc/vsftpd-internal.conf`
 
 ### Создаём файлы логов
