@@ -28,6 +28,11 @@ curl -sfL https://get.k3s.io | sh -s - \
   --disable local-storage \
   --disable traefik 
 ```
+### Добавить workers
+```
+curl -sfL https://get.k3s.io | K3S_URL=https://myserver:6443 K3S_TOKEN=mynodetoken sh -
+```
+`token на k3s-mn1` --->`cat /var/lib/rancher/k3s/server/node-token`
 ### Устанавливаем calico на mn1
 
 ```
