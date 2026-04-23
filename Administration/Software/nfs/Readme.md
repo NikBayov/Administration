@@ -73,7 +73,18 @@ showmount -e {{IP_NFS_Server}}
 sudo mkdir -p /mnt/shared
 sudo mount -t nfs4 {{IP_NFS_Server}}:/srv/nfs/shared /mnt/shared
 ```
+
 ### Можно добавить в fstab
 ```
 {{IP_NFS_Server}}:/srv/nfs/shared  /mnt/shared  nfs4  defaults,_netdev  0  0
 ```
+
+### Для добавления в k3s  скачиваем helm и настраиваем 
+```
+helm pull csi-driver-nfs/csi-driver-nfs --untar
+```
+```
+cd csi-driver-nfs && helm install csi-driver-nfs csi-driver-nfs/csi-driver-nfs   --namespace kube-system -f ./values.yaml
+```
+
+### Можно создать тестовый pvc для проверки файлы приложил
