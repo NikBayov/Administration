@@ -13,13 +13,13 @@ flux-repo/
 │   ├── dev/
 │   │   ├── flux-system/
 │   │   ├── infrastructure.yaml
-│   │   ├── apps.yaml
+│   │   ├── apps/
 │   │   └── kustomization.yaml
 │   │
 │   └── prod/
 │       ├── flux-system/
 │       ├── infrastructure.yaml
-│       ├── apps.yaml
+│       ├── apps/
 │       └── kustomization.yaml
 │
 ├── infrastructure/
