@@ -83,3 +83,35 @@ flux get sources git -A
 ```
 flux get helm -A
 ```
+
+### Для проверки синхронизации ImageRepository
+```
+flux get image repository -A
+```
+
+### Проверяем какой тег flux выбрал(ImagePolicy)
+```
+flux get image policy -A
+```
+
+### Проверяем сделал ли Flux commit в Git(ImageUpdateAutomation)
+```
+flux get image update -A
+```
+
+###
+```
+```
+
+###
+```
+```
+
+###
+```
+```
+
+###
+```
+```
+
