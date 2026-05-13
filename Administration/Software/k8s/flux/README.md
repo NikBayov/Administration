@@ -81,7 +81,7 @@ flux get sources git -A
 ```
 ### Для проверки синхронизации helm
 ```
-flux get helm -A
+flux get helmrealese -A
 ```
 
 ### Для проверки синхронизации ImageRepository
