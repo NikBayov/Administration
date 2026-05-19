@@ -38,4 +38,40 @@ controlplane.yaml
 worker.yaml
 talosconfig
 ```
-### Заходим в нужный нам конфиг и настраиваем(с коробки тоже работает)
+### Заходим в нужный нам конфиг и настраиваем(с коробки тоже работает) и применяем
+```
+talosctl apply-config `
+  --insecure `
+  --nodes 192.168.1.140 `
+  --file .\controlplane.yaml
+```
+```
+talosctl apply-config `
+  --insecure `
+  --nodes 192.168.1.141 `
+  --file .\worker.yaml
+```
+
+### Настраиваем talosconfig 
+
+```PowerShell
+$env:TALOSCONFIG="$PWD\talosconfig"
+```
+```PowerShell
+talosctl config endpoint 192.168.1.140 
+talosctl config node 192.168.1.141
+```
+
+### Выполняем Bootstrap кластера
+```
+talosctl bootstrap --nodes 192.168.1.140
+```
+### Получаем kubeconfig
+```
+talosctl kubeconfig --nodes 192.168.1.140
+```
+### Проверяем кластер
+```
+kubectl get nodes
+```
+# Установка окончена
