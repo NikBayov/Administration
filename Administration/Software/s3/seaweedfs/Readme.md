@@ -144,6 +144,29 @@ exec /usr/local/bin/weed s3 \
   -config=/etc/seaweedfs/s3.json \
   > /var/log/seaweedfs/s3.log 2>&1
 ```
+#### Создаём systemd-service /etc/systemd/system/seaweedfs.service
+```
+[Unit]
+Description=SeaweedFS
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/start-seaweedfs.sh
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+
+```
+```
+systemctl daemon-reload
+systemctl reset-failed seaweedfs
+systemctl enable --now seaweedfs
+systemctl status seaweedfs --no-pager
+```
 ### Для GUI делаю авторизаиию через htpasswd и nginx(у меня docker)
 ```
 apt install -y docker.io apache2-utils
@@ -240,3 +263,31 @@ docker run -d \
   nginx:alpine
 ```
 ### Проверяем доступ к gui и s3
+![screenshot](/cache/picture/s3-filer-seaweedfs.png)
+![screenshot](/cache/picture/s3-master-seaweedfs.png)
+
+### Доступ к s3 через cli aws
+```
+apt update
+apt install -y awscli
+```
+#### Настраиваем AWS CLI профиль
+```
+aws configure --profile seaweedfs-admin
+```
+```
+AWS Access Key ID: seaweed-admin
+AWS Secret Access Key: your_passwd
+Default region name: us-east-1
+Default output format: json
+```
+#### Проверяем подключение 
+```
+aws --profile seaweedfs-admin   --endpoint-url https://s3-api.example.ru   s3 mb s3://test-bucket
+aws --profile seaweedfs-admin   --endpoint-url https://s3-api.example.rus s3 cp test.txt s3://test-bucket/
+aws --profile seaweedfs-admin   --endpoint-url https://s3-api.example.ru   s3 ls s3://test-bucket
+```
+#### Должны получить
+```
+2026-05-26 16:04:32         16 test.txt
+```
