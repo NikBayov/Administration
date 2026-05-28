@@ -110,29 +110,35 @@ mkdir -p /var/log/seaweedfs
 
 /usr/local/bin/weed master \
   -mdir=/data/seaweedfs/master \
-  -ip=127.0.0.1 \
-  -ip.bind=127.0.0.1 \
+  -ip=172.17.33.111 \
+  -ip.bind=0.0.0.0 \
   -port=9333 \
+  -port.grpc=19333 \
   -defaultReplication=000 \
+  -volumeSizeLimitMB=10000 \
   > /var/log/seaweedfs/master.log 2>&1 &
 
 sleep 5
 
 /usr/local/bin/weed volume \
   -dir=/data/seaweedfs/volume \
-  -ip=127.0.0.1 \
-  -ip.bind=127.0.0.1 \
+  -ip=172.17.33.111 \
+  -ip.bind=172.17.33.111 \
   -port=8080 \
-  -mserver=172.17.33.111:9333 \
-  -max=10 \
+  -port.grpc=18080 \
+  -master=172.17.33.111:9333 \
+  -max=100 \
   > /var/log/seaweedfs/volume.log 2>&1 &
 
 sleep 5
 
 /usr/local/bin/weed filer \
-  -ip=127.0.0.1 \
+  -ip=172.17.33.111 \
+  -ip.bind=0.0.0.0 \
   -port=8888 \
-  -master=127.0.0.1:9333 \
+  -port.grpc=18888 \
+  -master=172.17.33.111:9333 \
+  -defaultStoreDir=/data/seaweedfs/filer \
   > /var/log/seaweedfs/filer.log 2>&1 &
 
 sleep 5
@@ -140,7 +146,7 @@ sleep 5
 exec /usr/local/bin/weed s3 \
   -ip.bind=0.0.0.0 \
   -port=8333 \
-  -filer=127.0.0.1:8888 \
+  -filer=172.17.33.111:8888 \
   -config=/etc/seaweedfs/s3.json \
   > /var/log/seaweedfs/s3.log 2>&1
 ```
@@ -291,3 +297,136 @@ aws --profile seaweedfs-admin   --endpoint-url https://s3-api.example.ru   s3 ls
 ```
 2026-05-26 16:04:32         16 test.txt
 ```
+### Проверка заливки файлов через rclone
+```
+apt update && apt install rclone
+```
+#### Создаём профиль 
+```
+rclone config create seaweed s3   provider=Other   access_key_id=seaweed-admin   secret_access_key='your_passd'   endpoint=https://s3-api.examle.ru   region=us-east-1   acl=private
+```
+#### Делаем 100 рандомных файлов на 100мб
+```
+mkdir -p /tmp/s3-test-files
+
+for i in $(seq -w 1 100); do
+  dd if=/dev/urandom \
+     of=/tmp/s3-test-files/file-$i.bin \
+     bs=1M count=1 status=none
+done
+```
+### Пробуем залить их в s3 и проверяем
+```
+time rclone copy /tmp/s3-test-files \
+  seaweed:s3-tools-test/rclone-test/ \
+  --progress \
+  --transfers 8 \
+  --checkers 8 \
+  --s3-upload-cutoff 100M \
+  --s3-chunk-size 100M
+```
+```
+rclone ls seaweed:s3-tools-test/rclone-test/ | wc -l
+```
+#### Должно быть 100 
+
+### Если нужно версионирование 
+```
+aws --profile seaweedfs-admin \
+  --endpoint-url https://s3-api.examle.ru \
+  s3api put-bucket-versioning \
+  --bucket s3-tools-test \
+  --versioning-configuration Status=Enabled
+```
+#### Проверка 
+```
+aws --profile seaweedfs-admin \
+  --endpoint-url https://s3-api.examle.ru \
+  s3api get-bucket-versioning \
+  --bucket s3-tools-test
+```
+#### Ожидаемо 
+```
+{
+  "Status": "Enabled"
+}
+```
+### Добавление Lifecycle policy — удаление через 30 дней
+```
+cat > /tmp/lifecycle.json <<'EOF'
+{
+  "Rules": [
+    {
+      "ID": "delete-after-30-days",
+      "Status": "Enabled",
+      "Filter": {
+        "Prefix": ""
+      },
+      "Expiration": {
+        "Days": 30
+      }
+    }
+  ]
+}
+EOF
+```
+#### Применяем 
+```
+aws --profile seaweedfs-admin \
+  --endpoint-url https://s3-api.example.ru \
+  s3api put-bucket-lifecycle-configuration \
+  --bucket s3-tools-test \
+  --lifecycle-configuration file:///tmp/lifecycle.json
+```
+#### Проверяем 
+```
+aws --profile seaweedfs-admin \
+  --endpoint-url https://s3-api.example.ru \
+  s3api get-bucket-lifecycle-configuration \
+  --bucket s3-tools-test
+```
+### Создание IAM — read-only пользователь
+```
+nano /etc/seaweedfs/s3.json
+```
+#### Добавляем блок  внутри массива identities
+```
+{
+  "identities": [
+    {
+      "name": "admin",
+      "credentials": [
+        {
+          "accessKey": "seaweed-admin",
+          "secretKey": "your_pass"
+        }
+      ],
+      "actions": [
+        "Admin",
+        "Read",
+        "List",
+        "Tagging",
+        "Write"
+      ]
+    },
+    {
+      "name": "readonly",
+      "credentials": [
+        {
+          "accessKey": "seaweed-readonly",
+          "secretKey": "your_pass"
+        }
+      ],
+      "actions": [
+        "Read:s3-tools-test",
+        "List:s3-tools-test"
+      ]
+    }
+  ]
+}
+```
+```
+systemctl restart seaweedfs
+```
+
+### Могут кончится volume , надо регулировать флагом -max=100 в start-seaweedfs.sh
