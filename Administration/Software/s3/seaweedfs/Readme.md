@@ -430,3 +430,128 @@ systemctl restart seaweedfs
 ```
 
 ### Могут кончится volume , надо регулировать флагом -max=100 в start-seaweedfs.sh
+
+### Настройки репликации(если это можно так назвать)
+
+#### Клонируем исходную вм меняем ip в скрипте и днс в ngx.conf на https://s3-api2.example.ru
+
+#### Проверяем что сервис запустился
+```
+ss -tulpn | grep -E '9333|8080|18080|8888|18888|8333'
+curl -s http://your_host:9333/dir/status | jq
+```
+```
+aws --profile seaweedfs-admin \
+  --endpoint-url https://s3-api2.example.ru \
+  s3 ls
+```
+#### Создаём bucket на обоих ВМ
+```
+aws --profile seaweedfs-admin \
+  --endpoint-url https://s3-api.example.ru \
+  s3 mb s3://replication-test
+```
+```
+aws --profile seaweedfs-admin \
+  --endpoint-url https://s3-api2.example.ru \
+  s3 mb s3://replication-test
+```
+
+### Настраиваем rclone remotes(на одной любой вм)
+```
+rclone config create seaweed-primary s3 \
+  provider=Other \
+  access_key_id=seaweed-admin \
+  secret_access_key='PRIMARY_SECRET' \
+  endpoint=https://s3-api.examle.ru \
+  region=us-east-1 \
+  acl=private
+```
+```
+rclone config create seaweed-replica s3 \
+  provider=Other \
+  access_key_id=seaweed-admin \
+  secret_access_key='REPLICA_SECRET' \
+  endpoint=https://s3-api2.example.ru \
+  region=us-east-1 \
+  acl=private
+```
+#### Проверяем
+```
+rclone lsd seaweed-primary:
+rclone lsd seaweed-replica:
+```
+### Загружаем тест на primary через aws-cli
+```
+echo "replication test $(date)" > /tmp/repl.txt
+
+aws --profile seaweedfs-admin \
+  --endpoint-url https://s3-api.example.ru \
+  s3 cp /tmp/repl.txt s3://replication-test/repl.txt
+```
+### Настраиваем репликацию bucket
+```
+rclone copy seaweed-primary:replication-test seaweed-replica:replication-test \
+  --progress \
+  --transfers 4 \
+  --checkers 8 \
+  --s3-upload-cutoff 100M \
+  --s3-chunk-size 100M
+```
+```
+rclone sync seaweed-primary:replication-test seaweed-replica:replication-test \
+  --progress \
+  --transfers 4 \
+  --checkers 8 \
+  --s3-upload-cutoff 100M \
+  --s3-chunk-size 100M
+```
+#### Проверяем через aws-cli на replica
+```
+aws --profile seaweedfs-admin \
+  --endpoint-url https://s3-api2.example.ru \
+  s3 ls s3://replication-test/
+```
+```
+aws --profile seaweedfs-admin \
+  --endpoint-url https://s3-api2.example.ru \
+  s3 cp s3://replication-test/repl.txt /tmp/repl-from-replica.txt
+
+cat /tmp/repl-from-replica.txt
+```
+### Автоматизируем replication
+```
+cat > /usr/local/bin/seaweedfs-bucket-replication.sh <<'EOF'
+#!/bin/bash
+set -e
+
+rclone sync seaweed-primary:replication-test seaweed-replica:replication-test \
+  --transfers 4 \
+  --checkers 8 \
+  --s3-upload-cutoff 100M \
+  --s3-chunk-size 100M \
+  --log-file=/var/log/seaweedfs-bucket-replication.log \
+  --log-level=INFO
+EOF
+
+chmod +x /usr/local/bin/seaweedfs-bucket-replication.sh
+```
+```
+cat > /etc/systemd/system/seaweedfs-bucket-replication.service <<'EOF'
+[Unit]
+Description=SeaweedFS bucket replication
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/seaweedfs-bucket-replication.sh
+EOF
+```
+```
+systemctl daemon-reload
+systemctl enable --now seaweedfs-bucket-replication.timer
+```
+#### Проверка 
+```
+systemctl list-timers | grep seaweedfs
+journalctl -u seaweedfs-bucket-replication.service -n 50 --no-pager
+```
