@@ -88,3 +88,28 @@ talosctl --talosconfig .\talosconfig `
   --nodes 192.168.1.140 `
   --file .\controlplane.yaml
 ```
+### reboot nodes
+```
+talosctl --talosconfig .\talosconfig reboot -n 192.168.1.140 -n 192.168.1.141 -n 192.168.1.142
+```
+### Проверка ntp 
+```
+talosctl --talosconfig .\talosconfig -e 192.168.1.140 -n 192.168.1.140 time
+```
+### Проверка dns
+```
+talosctl --talosconfig .\talosconfig --endpoints 192.168.1.140 --nodes 192.168.1.140 read /etc/resolv.conf
+```
+### Просмотр логов 
+```
+talosctl --talosconfig .\talosconfig `
+  --endpoints 192.168.1.140 `
+  --nodes 192.168.1.140 `
+  logs time-syncd
+```
+### Упрощение команд
+```
+talosctl --talosconfig .\talosconfig config endpoint 192.168.1.140
+talosctl --talosconfig .\talosconfig config node 192.168.1.140
+$env:TALOSCONFIG = ".\talosconfig"
+```
