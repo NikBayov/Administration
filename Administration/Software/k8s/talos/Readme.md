@@ -51,7 +51,12 @@ talosctl apply-config `
   --nodes 192.168.1.141 `
   --file .\worker.yaml
 ```
-
+```
+talosctl apply-config `
+  --insecure `
+  --nodes 192.168.1.142 `
+  --file .\worker2.yaml
+```
 ### Настраиваем talosconfig 
 
 ```PowerShell
@@ -75,3 +80,11 @@ talosctl kubeconfig --nodes 192.168.1.140
 kubectl get nodes
 ```
 # Установка окончена
+
+### После установки менять конфиги так:
+```
+talosctl --talosconfig .\talosconfig `
+  apply-config `
+  --nodes 192.168.1.140 `
+  --file .\controlplane.yaml
+```
