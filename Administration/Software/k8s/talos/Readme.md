@@ -83,9 +83,9 @@ kubectl get nodes
 
 ### После установки менять конфиги так:
 ```
-talosctl --talosconfig .\talosconfig `
-  apply-config `
-  --nodes 192.168.1.140 `
+talosctl --talosconfig .\talosconfig \
+  apply-config \
+  --nodes 192.168.1.140 \
   --file .\controlplane.yaml
 ```
 ### reboot nodes
@@ -102,9 +102,9 @@ talosctl --talosconfig .\talosconfig --endpoints 192.168.1.140 --nodes 192.168.1
 ```
 ### Просмотр логов 
 ```
-talosctl --talosconfig .\talosconfig `
-  --endpoints 192.168.1.140 `
-  --nodes 192.168.1.140 `
+talosctl --talosconfig .\talosconfig \
+  --endpoints 192.168.1.140 \
+  --nodes 192.168.1.140 \
   logs time-syncd
 ```
 ### Упрощение команд
